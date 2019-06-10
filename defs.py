@@ -3194,7 +3194,7 @@ class Backgrounds:
 		#~ subprocesses = ["ST_tW_antitop","ST_tW_top","TTTo2L2Nu","TTTo2L2Nu_M500To800","TTTo2L2Nu_M800To1200","TTTo2L2Nu_M1200To1800","TTTo2L2Nu_M1800ToInf","ZZ","WZ","WWTo2L2Nu","WWTo2L2Nu_M600To1200","WWTo2L2Nu_M1200To2500","WWTo2L2Nu_M2500ToInf"]
 		#~ subprocesses = ["Wantitop","tW","ttbar_lep","ZZ","WZ","WWinclusive","dyInclusive50"]
 		subprocesses = ["Wantitop","tW","ttbar_lep","ZZ","WZ","WWinclusive","dyInclusive50"]
-		label = "Other"
+		label = "Other #rightarrow #mu^{+}#mu^{-}"
 		fillcolor = ROOT.kRed-4
 		linecolor = ROOT.kBlack	
 		uncertainty = 0.04
@@ -3203,7 +3203,7 @@ class Backgrounds:
 
 	class Jets:
 		subprocesses = ["Jets"]
-		label = "Jets"
+		label = "Jets #rightarrow #mu^{+}#mu^{-}"
 		fillcolor = ROOT.kYellow
 		linecolor = ROOT.kBlack	
 		uncertainty = 0.04

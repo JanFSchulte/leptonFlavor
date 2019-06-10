@@ -39,11 +39,11 @@ def negWeightFractions(path,muon=True):
 
 
 def binning(channel='muon'):
-	if channel == 'muon':
+	if channel == 'muon' or 'electron':
 		nbins = 51
 		m_min = 70.
 		m_max = 4000.
-	if channel == 'electron':
+	'''if channel == 'electron':
 		return ([j for j in range(50, 120, 5)] +
 				[j for j in range(120, 150, 5)] +
 				[j for j in range(150, 200, 10)] +
@@ -55,7 +55,7 @@ def binning(channel='muon'):
 				[j for j in range(1900, 4000, 80) ] +
 				[j for j in range(4000, 5000, 100) ] +
 				[5000])
-
+	'''
 	# Calculate logarithmic bins
 	width = (math.log(m_max) - math.log(m_min)) / nbins
 	logbins = []
@@ -99,7 +99,7 @@ def loadHistoFromFile(fileName,histName,rebin,muon=True,logBins=False):
 	else:	
 		result = rootFile.Get(histName)
 	# ~ if logBins and( "Mass" in histName or ("jets" in histName and not ("saved_hist_for_combine" in fileName or "hist_jets" in fileName))):	
-	if logBins and( "Mass" in histName and not ("saved_hist_for_combine" in fileName or "hist_jets" in fileName)):	
+	if True: #logBins and( "Mass" in histName and not ("saved_hist_for_combine" in fileName or "hist_jets" in fileName)):	
 		if not muon:
 			bng = binning("electron")
 		else:
@@ -286,7 +286,7 @@ class Process:
 					histo = tempHist.Clone()
 				else:	
 					histo.Add(tempHist.Clone())
-			histo.SetFillColor(self.theColor)
+			#histo.SetFillColor(self.theColor)
 			histo.SetLineColor(self.theLineColor)
 			histo.GetXaxis().SetTitle(plot.xaxis) 
 			histo.GetYaxis().SetTitle(plot.yaxis)	
@@ -332,7 +332,7 @@ class TheStack:
 class TheStack2D:
 	from ROOT import THStack
 	theStack = THStack()	
-	theHistogram = None	
+	theHistogram = TH1F() #None	
 	def  __init__(self,processes,lumi,plot,zScale):
 		self.theStack = THStack()
 			
