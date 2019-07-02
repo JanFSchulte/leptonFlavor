@@ -74,78 +74,78 @@ def getElErr(mass, chann, norm=False):
 
 # multiply hist by 1/(Acceptance x Efficiency)
 def inverseAE(hist, plotObj, year):
-        # muon and electron
-        # BB and BE
-        if year == 2017:
-                if plotObj.muon:
-                        if "BB" in plotObj.fileName:
-                                for i in range(1, hist.GetSize()-1):
-                                        mass = hist.GetBinCenter(i)
-                                        if mass < 600:
-                                                ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
-                                        else:
-                                                ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
-                                        #print mass, ae
-                                        if mass < 120: ae = float("inf")
-                                        hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                        elif "BE" in plotObj.fileName:
-                                for i in range(1, hist.GetSize()-1):
-                                        mass = hist.GetBinCenter(i)
-                                        if mass < 450:
-                                                ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
-                                        else:
-                                                ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
-                                        #print mass, ae
-                                        if mass < 120: ae = float("inf")
-                                        hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                else: # is electron
-                        if "BB" in plotObj.fileName:
-                                for i in range(1, hist.GetSize()-1):
-                                        mass = hist.GetBinCenter(i)
-                                        ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
-                                        #print mass, ae
-                                        hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                        elif "BE" in plotObj.fileName:
-                                for i in range(1, hist.GetSize()-1):
-                                        mass = hist.GetBinCenter(i)
-                                        ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
-                                        #print mass, ae
-                                        hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-        elif year == 2018:
-                if plotObj.muon:
-                        if "BB" in plotObj.fileName:
-                                for i in range(1, hist.GetSize()-1):
-                                        mass = hist.GetBinCenter(i)
-                                        if mass < 600:
-                                                ae = 2.14-0.1286*math.exp(-(mass-110.6)/22.44)-2.366*mass**(-0.03382)
-                                        else:
-                                                ae = 5.18-58450.0/(mass+11570.0)-0.0002255*mass
-                                        #print mass, ae
-                                        if mass < 120: ae = float("inf")
-                                        hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                        elif "BE" in plotObj.fileName:
-                                for i in range(1, hist.GetSize()-1):
-                                        mass = hist.GetBinCenter(i)
-                                        if mass < 450:
-                                                ae = 13.4-6.693*math.exp((mass+4852000.0)/7437000.0)-81.43*mass**(-1.068)
-                                        else:
-                                                ae = 0.3154+0.04561*mass**1.362*math.exp(-(mass+4927.0)/727.5)
-                                        #print mass, ae
-                                        if mass < 120: ae = float("inf")
-                                        hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                else: # is electron
-                        if "BB" in plotObj.fileName:
-                                for i in range(1, hist.GetSize()-1):
-                                        mass = hist.GetBinCenter(i)
-                                        ae = 0.5947-440.1/(mass+393) + 47630.0/(mass**2+108000)
-                                        #print mass, ae
-                                        hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                        elif "BE" in plotObj.fileName:
-                                for i in range(1, hist.GetSize()-1):
-                                        mass = hist.GetBinCenter(i)
-                                        ae = 0.01718+468.9/(mass+575.6)-113300.0/(mass**2+82800)+13740000.0/(mass**3+23380000)
-                                        #print mass, ae
-                                        hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+		# muon and electron
+		# BB and BE
+		if year == 2017:
+				if plotObj.muon:
+						if "BB" in plotObj.fileName:
+								for i in range(1, hist.GetSize()-1):
+										mass = hist.GetBinCenter(i)
+										if mass < 600:
+												ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
+										else:
+												ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
+										#print mass, ae
+										if mass < 120: ae = float("inf")
+										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+						elif "BE" in plotObj.fileName:
+								for i in range(1, hist.GetSize()-1):
+										mass = hist.GetBinCenter(i)
+										if mass < 450:
+												ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
+										else:
+												ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
+										#print mass, ae
+										if mass < 120: ae = float("inf")
+										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+				else: # is electron
+						if "BB" in plotObj.fileName:
+								for i in range(1, hist.GetSize()-1):
+										mass = hist.GetBinCenter(i)
+										ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
+										#print mass, ae
+										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+						elif "BE" in plotObj.fileName:
+								for i in range(1, hist.GetSize()-1):
+										mass = hist.GetBinCenter(i)
+										ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
+										#print mass, ae
+										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+		elif year == 2018:
+				if plotObj.muon:
+						if "BB" in plotObj.fileName:
+								for i in range(1, hist.GetSize()-1):
+										mass = hist.GetBinCenter(i)
+										if mass < 600:
+												ae = 2.14-0.1286*math.exp(-(mass-110.6)/22.44)-2.366*mass**(-0.03382)
+										else:
+												ae = 5.18-58450.0/(mass+11570.0)-0.0002255*mass
+										#print mass, ae
+										if mass < 120: ae = float("inf")
+										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+						elif "BE" in plotObj.fileName:
+								for i in range(1, hist.GetSize()-1):
+										mass = hist.GetBinCenter(i)
+										if mass < 450:
+												ae = 13.4-6.693*math.exp((mass+4852000.0)/7437000.0)-81.43*mass**(-1.068)
+										else:
+												ae = 0.3154+0.04561*mass**1.362*math.exp(-(mass+4927.0)/727.5)
+										#print mass, ae
+										if mass < 120: ae = float("inf")
+										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+				else: # is electron
+						if "BB" in plotObj.fileName:
+								for i in range(1, hist.GetSize()-1):
+										mass = hist.GetBinCenter(i)
+										ae = 0.5947-440.1/(mass+393) + 47630.0/(mass**2+108000)
+										#print mass, ae
+										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+						elif "BE" in plotObj.fileName:
+								for i in range(1, hist.GetSize()-1):
+										mass = hist.GetBinCenter(i)
+										ae = 0.01718+468.9/(mass+575.6)-113300.0/(mass**2+82800)+13740000.0/(mass**3+23380000)
+										#print mass, ae
+										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 
 	
 	
@@ -275,16 +275,16 @@ def plotDataMC(args,plot_mu,plot_el):
 		#legend.AddEntry(temphist,process.label,"f")
 		#legendEta.AddEntry(temphist,process.label,"f")
 	
-        for process in reversed(processes_el):
-                if not plot_el.muon and "#mu^{+}#mu^{-}" in process.label:
-                        process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
+		for process in reversed(processes_el):
+				if not plot_el.muon and "#mu^{+}#mu^{-}" in process.label:
+						process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
 		process.theColor = ROOT.kRed
 		process.theLineColor = ROOT.kRed
-                temphist = ROOT.TH1F()
-                temphist.SetFillColor(process.theColor)
-                #legendHists.append(temphist.Clone)
-                #legend.AddEntry(temphist,process.label,"f")
-                #legendEta.AddEntry(temphist,process.label,"f")
+		temphist = ROOT.TH1F()
+		temphist.SetFillColor(process.theColor)
+		#legendHists.append(temphist.Clone)
+		#legend.AddEntry(temphist,process.label,"f")
+		#legendEta.AddEntry(temphist,process.label,"f")
 
 	'''if args.signals !=0:
 		processesWithSignal = []
@@ -378,19 +378,19 @@ def plotDataMC(args,plot_mu,plot_el):
 	#datael.Scale(1./41.529)
 	if args.znorm:
 		muheight = stackmu.theHistogram.FindBin(90)
-		print "Z height of mu: %d +- %d"%(stackmu.theHistogram.GetBinCenter(muheight), stackmu.theHistogram.GetBinWidth(muheight))
-		print "Z height of mu mc&data: %d, %d"%(stackmu.theHistogram.GetBinContent(muheight), datamu.GetBinContent(muheight))
+		print ("Z height of mu: %d +- %d"%(stackmu.theHistogram.GetBinCenter(muheight), stackmu.theHistogram.GetBinWidth(muheight)))
+		print ("Z height of mu mc&data: %d, %d"%(stackmu.theHistogram.GetBinContent(muheight), datamu.GetBinContent(muheight)))
 		elheight = stackel.theHistogram.FindBin(90)
-		print "Z height of el: %d +- %d"%(stackel.theHistogram.GetBinCenter(elheight), stackel.theHistogram.GetBinWidth(elheight))
-		print "Z height of el mc&data: %d, %d"%(stackel.theHistogram.GetBinContent(elheight), datael.GetBinContent(elheight))
+		print ("Z height of el: %d +- %d"%(stackel.theHistogram.GetBinCenter(elheight), stackel.theHistogram.GetBinWidth(elheight)))
+		print ("Z height of el mc&data: %d, %d"%(stackel.theHistogram.GetBinContent(elheight), datael.GetBinContent(elheight)))
 		znum = stackmu.theHistogram.GetBinContent(muheight)
 		for h in stackmu.theStack.GetHists(): 
-			print "Z height of each hist in mu"
-			print h.GetBinContent(muheight)
+			print ("Z height of each hist in mu")
+			print (h.GetBinContent(muheight))
 			h.Scale(1./znum)
 		for h in stackel.theStack.GetHists(): 
-			print "Z height of each hist in ee"
-			print h.GetBinContent(elheight)
+			print ("Z height of each hist in ee")
+			print (h.GetBinContent(elheight))
 			h.Scale(1./znum)
 		stackmu.theHistogram.Scale(1./znum)
 		stackel.theHistogram.Scale(1./znum)
@@ -569,7 +569,7 @@ def plotDataMC(args,plot_mu,plot_el):
 			yerr = yval * math.sqrt(getMuErr(xval, chann, args.znorm)**2 + getElErr(xval, chann, args.znorm)**2)
 			ratioGraphs.SetPoint(i, xval, yval)
 			ratioGraphs.SetPointError(i, xerr, xerr, yerr, yerr)
-			if xval > 1000 and xval < 2000: print "M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval)
+			if xval > 1000 and xval < 2000: print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
 		ratioData = ROOT.TGraphAsymmErrors(datamu.GetSize()-2)
 		for i in range(1, datamu.GetSize()-1):
 			xval = datamu.GetBinCenter(i)
@@ -579,25 +579,25 @@ def plotDataMC(args,plot_mu,plot_el):
 			yerr = yval * math.sqrt(getMuErr(xval, chann, args.znorm)**2 + getElErr(xval, chann, args.znorm)**2)
 			ratioData.SetPoint(i, xval, yval)
 			ratioData.SetPointError(i, xerr, xerr, yerr, yerr)
-			if xval > 1000 and xval < 2000: print "M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval)
-		nBinsX = 20
-                nBinsY = 10
-                hAxis = ROOT.TH2F("hAxis", "", nBinsX, xMin, xMax, nBinsY, 0.5, 2.5)
-                hAxis.Draw("AXIS")
+			if xval > 1000 and xval < 2000: print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
+			nBinsX = 20
+			nBinsY = 10
+			hAxis = ROOT.TH2F("hAxis", "", nBinsX, xMin, xMax, nBinsY, 0.5, 2.5)
+			hAxis.Draw("AXIS")
 
-                hAxis.GetYaxis().SetNdivisions(408)
-                hAxis.SetTitleOffset(0.4, "Y")
-                hAxis.SetTitleSize(0.15, "Y")
-                hAxis.SetYTitle("R_{#mu#mu/ee}")
-                hAxis.GetXaxis().SetLabelSize(0.0)
-                hAxis.GetYaxis().SetLabelSize(0.15)
-		hAxis.SetTitleSize(0.15, "Y")
-                #binMerging = [-1]
+			hAxis.GetYaxis().SetNdivisions(408)
+			hAxis.SetTitleOffset(0.4, "Y")
+			hAxis.SetTitleSize(0.15, "Y")
+			hAxis.SetYTitle("R_{#mu#mu/ee}")
+			hAxis.GetXaxis().SetLabelSize(0.0)
+			hAxis.GetYaxis().SetLabelSize(0.15)
+			hAxis.SetTitleSize(0.15, "Y")
+				#binMerging = [-1]
 		
-                oneLine = ROOT.TLine(xMin, 1.0, xMax, 1.0)
-                oneLine.SetLineStyle(2)
-                oneLine.Draw()
-		
+			oneLine = ROOT.TLine(xMin, 1.0, xMax, 1.0)
+			oneLine.SetLineStyle(2)
+			oneLine.Draw()
+	
 		ratioGraphs.SetFillColor(ROOT.kBlue-3)
 		ratioGraphs.SetMarkerColor(ROOT.kBlue-3)
 		ratioGraphs.SetFillStyle(3002)	
@@ -606,9 +606,9 @@ def plotDataMC(args,plot_mu,plot_el):
 		ratioData.Draw("same p")
 		
 		rlegend = TLegend(0.2, 0.65, 0.5, 0.925)
-        	rlegend.SetFillStyle(0)
-        	rlegend.SetBorderSize(1)
-	        rlegend.SetTextFont(42)
+		rlegend.SetFillStyle(0)
+		rlegend.SetBorderSize(1)
+		rlegend.SetTextFont(42)
 		rlegend.AddEntry(ratioGraphs, "e/mu in MC inclusive", "pe")
 		rlegend.AddEntry(ratioData, "e/mu in data", "pe")
 		rlegend.Draw("same")
