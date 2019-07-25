@@ -3,7 +3,7 @@ import gc
 from array import array
 from ROOT import TCanvas, TPad, TH1F, TH2F, TH1I, THStack, TLegend, TMath
 from math import sqrt
-from defs import defineMyColors, myColors, fileNames, fileNamesEle, path, crossSections, zScale, zScale2016
+from defs import defineMyColors, myColors, fileNames, fileNamesEle, path, crossSections, zScale, zScale2016, zScale2018
 from copy import deepcopy
 import math, uuid
 
@@ -172,6 +172,14 @@ def getFilePathsAndSampleNames(path,muon=True):
 						sampleName = sampleName.replace("LambdaT", "Lam")
 					else:	
 						sampleName = sampleName.replace("2016_","")+"_2016"
+                                if "2018_" in sampleName:
+                                        if "CI" in sampleName:
+                                                sampleName = sampleName.replace("2018_","")
+                                        elif "ADD" in sampleName:
+                                                sampleName = sampleName.replace("2018_", "")
+                                                sampleName = sampleName.replace("LambdaT", "Lam")
+                                        else:
+                                                sampleName = sampleName.replace("2018_","")+"_2018"
 				result[sampleName] = filePath
 		else:
 			if "dileptonAna_electrons" in filePath and not "DoubleElectron" in filePath:
@@ -184,6 +192,14 @@ def getFilePathsAndSampleNames(path,muon=True):
                                                 sampleName = sampleName.replace("LambdaT", "Lam")
 					else:	
 						sampleName = sampleName.replace("2016_","")+"_2016"
+                                if "2018_" in sampleName:
+                                        if "CI" in sampleName:
+                                                sampleName = sampleName.replace("2018_","")
+                                        elif "ADD" in sampleName:
+                                                sampleName = sampleName.replace("2018_", "")
+                                                sampleName = sampleName.replace("LambdaT", "Lam")
+                                        else:
+                                                sampleName = sampleName.replace("2018_","")+"_2018"
 				result[sampleName] = filePath
 	return result
 
@@ -252,14 +268,14 @@ class Process:
 		self.nEvents = []
 		for sample in self.samples:
 			if not "Data" in sample and not "Jets" in sample:
-				self.xsecs.append(crossSections[sample])
+				self.xsecs.append(crossSections[sample.replace("2018","2016")])
 				self.negWeightFraction.append(negWeights[sample])
 				self.nEvents.append(Counts[sample])	
 	def loadHistogram(self,plot,lumi,zScaleFac):
 		histo = None
 		if plot.plot2D:
 			for index, sample in enumerate(self.samples):
-				
+			       # print(sample)	
 				if plot.muon:
 					tempHist = loadHistoFromFile2D(fileNames[sample],plot.histName,plot.rebin)
 				else:	
@@ -276,6 +292,7 @@ class Process:
 			histo.GetYaxis().SetTitle(plot.yaxis)	
 		else:
 			for index, sample in enumerate(self.samples):
+                               # print(sample)
 				if plot.muon:
 					tempHist = loadHistoFromFile(fileNames[sample],plot.histName,plot.rebin,plot.muon,plot.logX)
 				else:	
@@ -328,7 +345,11 @@ class TheStack:
 				self.theHistogram = temphist.Clone()
 			else:	
 				self.theHistogram.Add(temphist.Clone())
-				
+        def Add(self,addstack):
+		for h in addstack.theStack.GetHists():
+                        
+                        self.theStack.Add(h.Clone())
+                        self.theHistogram.Add(h.Clone())
 class TheStack2D:
 	from ROOT import THStack
 	theStack = THStack()	
