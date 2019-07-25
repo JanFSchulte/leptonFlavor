@@ -4,7 +4,7 @@ from ROOT import TMath
 import sys
 import copy
 
-path = "../files/"
+path = "/depot/cms/users/schul105/files/"
 
 zScale = {
 	"electrons":0.95,
@@ -1366,7 +1366,7 @@ fileNames = {
 "ttbar_lep_800to1200_2018":"dileptonAna_muons_2018_ttbar_lep_800to1200.root",
 "ttbar_lep_2018":"dileptonAna_muons_2018_ttbar_lep.root",
 "tW_2018":"dileptonAna_muons_2018_tW.root",
-"Wantitop_2018":"dileptonAna_muons_2016_Wantitop.root",
+"Wantitop_2018":"dileptonAna_muons_2018_Wantitop.root",
 
 "WW1200to2500_2018":"dileptonAna_muons_2018_WW1200to2500.root",
 "WW200to600_2018":"dileptonAna_muons_2018_WW200to600.root",
@@ -2156,13 +2156,13 @@ fileNamesEle = {
 
 
 "ttbar_lep_1200to1800_2018":"dileptonAna_electrons_2018_ttbar_lep_1200to1800.root",
-"ttbar_lep_1800toInf_2018":"dileptonAna_electrons_2018_ttbar_lep1800toInf.root",
+"ttbar_lep_1800toInf_2018":"dileptonAna_electrons_2018_ttbar_lep_1800toInf.root",
 "ttbar_lep_500to800_2018":"dileptonAna_electrons_2018_ttbar_lep_500to800.root",
 "ttbar_lep50to500_2018":"dileptonAna_electrons_2018_ttbar_lep50to500.root",
 "ttbar_lep_800to1200_2018":"dileptonAna_electrons_2018_ttbar_lep_800to1200.root",
 "ttbar_lep_2018":"dileptonAna_electrons_2018_ttbar_lep.root",
 "tW_2018":"dileptonAna_electrons_2018_tW.root",
-"Wantitop_2018":"dileptonAna_electrons_2016_Wantitop.root",
+"Wantitop_2018":"dileptonAna_electrons_2018_Wantitop.root",
 
 "WW1200to2500_2018":"dileptonAna_electrons_2018_WW1200to2500.root",
 "WW200to600_2018":"dileptonAna_electrons_2018_WW200to600.root",
@@ -2170,8 +2170,8 @@ fileNamesEle = {
 "WW600to1200_2018":"dileptonAna_electrons_2018_WW600to1200.root",
 "WWinclusive_2018":"dileptonAna_electrons_2018_WWinclusive.root",
 
-"WZ_2018":"dileptonAna_muons_2018_WZ.root",
-"ZZ_2018":"dileptonAna_muons_2018_ZZ.root",
+"WZ_2018":"dileptonAna_electrons_2018_WZ.root",
+"ZZ_2018":"dileptonAna_electrons_2018_ZZ.root",
 
 "WZ2L2Q_2018":"dileptonAna_muons_electrons_WZ2L2Q.root",
 "WZ3LNu_2018":"dileptonAna_muons_electrons_WZ3LNu.root",
