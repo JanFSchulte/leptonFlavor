@@ -73,132 +73,132 @@ def getElErr(mass, chann, norm=False):
 	return math.sqrt(lumi**2+znorm**2+ pileup**2 + dybkg**2 + pdf**2 + energyscale**2 + idscale**2 + scalefac**2)
 
 def getErrors(default, others):
-				dfarr=root_numpy.hist2array(default)
-				errs=np.zeros(len(dfarr))
-				for other in others:
-								if type(other)==list:
-											   err1=root_numpy.hist2array(other[0])-dfarr
-											   err1=err1**2
-											   err2=root_numpy.hist2array(other[1])-dfarr
-											   err2=err2**2
-											   err=np.maximum(err1,err2)
-											   errs+=err
-								else:           
-											   err=root_numpy.hist2array(other)-dfarr
-											   err=err**2
-											   errs+=err
-				return err                            
+	dfarr=root_numpy.hist2array(default)
+	errs=np.zeros(len(dfarr))
+	for other in others:
+		if type(other)==list:
+			   err1=root_numpy.hist2array(other[0])-dfarr
+			   err1=err1**2
+			   err2=root_numpy.hist2array(other[1])-dfarr
+			   err2=err2**2
+			   err=np.maximum(err1,err2)
+			   errs+=err
+		else:           
+			   err=root_numpy.hist2array(other)-dfarr
+			   err=err**2
+			   errs+=err
+	return err                            
 
 # multiply hist by 1/(Acceptance x Efficiency)
 def inverseAE(hist, plotObj, year):
 		# muon and electron
 		# BB and BE
-				if year == 2016:
-								if plotObj.muon:
-												if "BB" in plotObj.fileName:
-																for i in range(1, hist.GetSize()-1):
-																				mass = hist.GetBinCenter(i)
-																				if mass < 600:
-																								ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
-																				else:
-																								ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
-																				#print mass, ae
-																				if mass < 120: ae = float("inf")
-																				hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-												elif "BE" in plotObj.fileName:
-																for i in range(1, hist.GetSize()-1):
-																				mass = hist.GetBinCenter(i)
-																				if mass < 450:
-																								ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
-																				else:
-																								ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
-																				#print mass, ae
-																				if mass < 120: ae = float("inf")
-																				hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-								else: # is electron
-												if "BB" in plotObj.fileName:
-																for i in range(1, hist.GetSize()-1):
-																				mass = hist.GetBinCenter(i)
-																				ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
-																				#print mass, ae
-																				hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-												elif "BE" in plotObj.fileName:
-																for i in range(1, hist.GetSize()-1):
-																				mass = hist.GetBinCenter(i)
-																				ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
-																				#print mass, ae
-																				hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-		
-				elif year == 2017:
-					if plotObj.muon:
-							if "BB" in plotObj.fileName:
-									for i in range(1, hist.GetSize()-1):
-											mass = hist.GetBinCenter(i)
-											if mass < 600:
-													ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
-											else:
-													ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
-											#print mass, ae
-											if mass < 120: ae = float("inf")
-											hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-							elif "BE" in plotObj.fileName:
-									for i in range(1, hist.GetSize()-1):
-											mass = hist.GetBinCenter(i)
-											if mass < 450:
-													ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
-											else:
-													ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
-											#print mass, ae
-											if mass < 120: ae = float("inf")
-											hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-					else: # is electron
-							if "BB" in plotObj.fileName:
-									for i in range(1, hist.GetSize()-1):
-											mass = hist.GetBinCenter(i)
-											ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
-											#print mass, ae
-											hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-							elif "BE" in plotObj.fileName:
-									for i in range(1, hist.GetSize()-1):
-											mass = hist.GetBinCenter(i)
-											ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
-											#print mass, ae
-											hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-				elif year == 2018:
-						if plotObj.muon:
-								if "BB" in plotObj.fileName:
-										for i in range(1, hist.GetSize()-1):
-												mass = hist.GetBinCenter(i)
-												if mass < 600:
-														ae = 2.14-0.1286*math.exp(-(mass-110.6)/22.44)-2.366*mass**(-0.03382)
-												else:
-														ae = 5.18-58450.0/(mass+11570.0)-0.0002255*mass
-												#print mass, ae
-												if mass < 120: ae = float("inf")
-												hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-								elif "BE" in plotObj.fileName:
-										for i in range(1, hist.GetSize()-1):
-												mass = hist.GetBinCenter(i)
-												if mass < 450:
-														ae = 13.4-6.693*math.exp((mass+4852000.0)/7437000.0)-81.43*mass**(-1.068)
-												else:
-														ae = 0.3154+0.04561*mass**1.362*math.exp(-(mass+4927.0)/727.5)
-												#print mass, ae
-												if mass < 120: ae = float("inf")
-												hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-						else: # is electron
-								if "BB" in plotObj.fileName:
-										for i in range(1, hist.GetSize()-1):
-												mass = hist.GetBinCenter(i)
-												ae = 0.5947-440.1/(mass+393) + 47630.0/(mass**2+108000)
-												#print mass, ae
-												hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-								elif "BE" in plotObj.fileName:
-										for i in range(1, hist.GetSize()-1):
-												mass = hist.GetBinCenter(i)
-												ae = 0.01718+468.9/(mass+575.6)-113300.0/(mass**2+82800)+13740000.0/(mass**3+23380000)
-												#print mass, ae
-												hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+	if year == 2016:
+		if plotObj.muon:
+			if "BB" in plotObj.fileName:
+				for i in range(1, hist.GetSize()-1):
+					mass = hist.GetBinCenter(i)
+					if mass < 600:
+						ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
+					else:
+						ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
+					#print mass, ae
+					if mass < 120: ae = float("inf")
+					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+			elif "BE" in plotObj.fileName:
+				for i in range(1, hist.GetSize()-1):
+					mass = hist.GetBinCenter(i)
+					if mass < 450:
+									ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
+					else:
+									ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
+					#print mass, ae
+					if mass < 120: ae = float("inf")
+					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+		else: # is electron
+			if "BB" in plotObj.fileName:
+				for i in range(1, hist.GetSize()-1):
+					mass = hist.GetBinCenter(i)
+					ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
+					#print mass, ae
+					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+			elif "BE" in plotObj.fileName:
+				for i in range(1, hist.GetSize()-1):
+					mass = hist.GetBinCenter(i)
+					ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
+					#print mass, ae
+					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+
+	elif year == 2017:
+		if plotObj.muon:
+			if "BB" in plotObj.fileName:
+				for i in range(1, hist.GetSize()-1):
+					mass = hist.GetBinCenter(i)
+					if mass < 600:
+						ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
+					else:
+						ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
+					#print mass, ae
+					if mass < 120: ae = float("inf")
+					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+			elif "BE" in plotObj.fileName:
+					for i in range(1, hist.GetSize()-1):
+						mass = hist.GetBinCenter(i)
+						if mass < 450:
+							ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
+						else:
+							ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
+						#print mass, ae
+						if mass < 120: ae = float("inf")
+						hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+		else: # is electron
+				if "BB" in plotObj.fileName:
+						for i in range(1, hist.GetSize()-1):
+								mass = hist.GetBinCenter(i)
+								ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
+								#print mass, ae
+								hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+				elif "BE" in plotObj.fileName:
+						for i in range(1, hist.GetSize()-1):
+								mass = hist.GetBinCenter(i)
+								ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
+								#print mass, ae
+								hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+	elif year == 2018:
+			if plotObj.muon:
+					if "BB" in plotObj.fileName:
+							for i in range(1, hist.GetSize()-1):
+									mass = hist.GetBinCenter(i)
+									if mass < 600:
+											ae = 2.14-0.1286*math.exp(-(mass-110.6)/22.44)-2.366*mass**(-0.03382)
+									else:
+											ae = 5.18-58450.0/(mass+11570.0)-0.0002255*mass
+									#print mass, ae
+									if mass < 120: ae = float("inf")
+									hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+					elif "BE" in plotObj.fileName:
+							for i in range(1, hist.GetSize()-1):
+									mass = hist.GetBinCenter(i)
+									if mass < 450:
+											ae = 13.4-6.693*math.exp((mass+4852000.0)/7437000.0)-81.43*mass**(-1.068)
+									else:
+											ae = 0.3154+0.04561*mass**1.362*math.exp(-(mass+4927.0)/727.5)
+									#print mass, ae
+									if mass < 120: ae = float("inf")
+									hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+			else: # is electron
+					if "BB" in plotObj.fileName:
+							for i in range(1, hist.GetSize()-1):
+									mass = hist.GetBinCenter(i)
+									ae = 0.5947-440.1/(mass+393) + 47630.0/(mass**2+108000)
+									#print mass, ae
+									hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+					elif "BE" in plotObj.fileName:
+							for i in range(1, hist.GetSize()-1):
+									mass = hist.GetBinCenter(i)
+									ae = 0.01718+468.9/(mass+575.6)-113300.0/(mass**2+82800)+13740000.0/(mass**3+23380000)
+									#print mass, ae
+									hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 																				
 def Stacks(processes,lumi,plot,zScale):
 		stacks=[]
