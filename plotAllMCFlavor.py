@@ -73,148 +73,148 @@ def getElErr(mass, chann, norm=False):
 	return math.sqrt(lumi**2+znorm**2+ pileup**2 + dybkg**2 + pdf**2 + energyscale**2 + idscale**2 + scalefac**2)
 
 def getErrors(default, others):
-                dfarr=root_numpy.hist2array(default)
-                errs=np.zeros(len(dfarr))
-                for other in others:
-                                if type(other)==list:
-                                               err1=root_numpy.hist2array(other[0])-dfarr
-                                               err1=err1**2
-                                               err2=root_numpy.hist2array(other[1])-dfarr
-                                               err2=err2**2
-                                               err=np.maximum(err1,err2)
-                                               errs+=err
-                                else:           
-                                               err=root_numpy.hist2array(other)-dfarr
-                                               err=err**2
-                                               errs+=err
-                return err                            
+				dfarr=root_numpy.hist2array(default)
+				errs=np.zeros(len(dfarr))
+				for other in others:
+								if type(other)==list:
+											   err1=root_numpy.hist2array(other[0])-dfarr
+											   err1=err1**2
+											   err2=root_numpy.hist2array(other[1])-dfarr
+											   err2=err2**2
+											   err=np.maximum(err1,err2)
+											   errs+=err
+								else:           
+											   err=root_numpy.hist2array(other)-dfarr
+											   err=err**2
+											   errs+=err
+				return err                            
 
 # multiply hist by 1/(Acceptance x Efficiency)
 def inverseAE(hist, plotObj, year):
 		# muon and electron
 		# BB and BE
-                if year == 2016:
-                                if plotObj.muon:
-                                                if "BB" in plotObj.fileName:
-                                                                for i in range(1, hist.GetSize()-1):
-                                                                                mass = hist.GetBinCenter(i)
-                                                                                if mass < 600:
-                                                                                                ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
-                                                                                else:
-                                                                                                ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
-                                                                                #print mass, ae
-                                                                                if mass < 120: ae = float("inf")
-                                                                                hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                                                elif "BE" in plotObj.fileName:
-                                                                for i in range(1, hist.GetSize()-1):
-                                                                                mass = hist.GetBinCenter(i)
-                                                                                if mass < 450:
-                                                                                                ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
-                                                                                else:
-                                                                                                ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
-                                                                                #print mass, ae
-                                                                                if mass < 120: ae = float("inf")
-                                                                                hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                                else: # is electron
-                                                if "BB" in plotObj.fileName:
-                                                                for i in range(1, hist.GetSize()-1):
-                                                                                mass = hist.GetBinCenter(i)
-                                                                                ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
-                                                                                #print mass, ae
-                                                                                hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                                                elif "BE" in plotObj.fileName:
-                                                                for i in range(1, hist.GetSize()-1):
-                                                                                mass = hist.GetBinCenter(i)
-                                                                                ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
-                                                                                #print mass, ae
-                                                                                hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+				if year == 2016:
+								if plotObj.muon:
+												if "BB" in plotObj.fileName:
+																for i in range(1, hist.GetSize()-1):
+																				mass = hist.GetBinCenter(i)
+																				if mass < 600:
+																								ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
+																				else:
+																								ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
+																				#print mass, ae
+																				if mass < 120: ae = float("inf")
+																				hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+												elif "BE" in plotObj.fileName:
+																for i in range(1, hist.GetSize()-1):
+																				mass = hist.GetBinCenter(i)
+																				if mass < 450:
+																								ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
+																				else:
+																								ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
+																				#print mass, ae
+																				if mass < 120: ae = float("inf")
+																				hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+								else: # is electron
+												if "BB" in plotObj.fileName:
+																for i in range(1, hist.GetSize()-1):
+																				mass = hist.GetBinCenter(i)
+																				ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
+																				#print mass, ae
+																				hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+												elif "BE" in plotObj.fileName:
+																for i in range(1, hist.GetSize()-1):
+																				mass = hist.GetBinCenter(i)
+																				ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
+																				#print mass, ae
+																				hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 		
-                if year == 2017:
-				if plotObj.muon:
-						if "BB" in plotObj.fileName:
-								for i in range(1, hist.GetSize()-1):
-										mass = hist.GetBinCenter(i)
-										if mass < 600:
-												ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
-										else:
-												ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
-										#print mass, ae
-										if mass < 120: ae = float("inf")
-										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-						elif "BE" in plotObj.fileName:
-								for i in range(1, hist.GetSize()-1):
-										mass = hist.GetBinCenter(i)
-										if mass < 450:
-												ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
-										else:
-												ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
-										#print mass, ae
-										if mass < 120: ae = float("inf")
-										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-				else: # is electron
-						if "BB" in plotObj.fileName:
-								for i in range(1, hist.GetSize()-1):
-										mass = hist.GetBinCenter(i)
-										ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
-										#print mass, ae
-										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-						elif "BE" in plotObj.fileName:
-								for i in range(1, hist.GetSize()-1):
-										mass = hist.GetBinCenter(i)
-										ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
-										#print mass, ae
-										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-		elif year == 2018:
-				if plotObj.muon:
-						if "BB" in plotObj.fileName:
-								for i in range(1, hist.GetSize()-1):
-										mass = hist.GetBinCenter(i)
-										if mass < 600:
-												ae = 2.14-0.1286*math.exp(-(mass-110.6)/22.44)-2.366*mass**(-0.03382)
-										else:
-												ae = 5.18-58450.0/(mass+11570.0)-0.0002255*mass
-										#print mass, ae
-										if mass < 120: ae = float("inf")
-										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-						elif "BE" in plotObj.fileName:
-								for i in range(1, hist.GetSize()-1):
-										mass = hist.GetBinCenter(i)
-										if mass < 450:
-												ae = 13.4-6.693*math.exp((mass+4852000.0)/7437000.0)-81.43*mass**(-1.068)
-										else:
-												ae = 0.3154+0.04561*mass**1.362*math.exp(-(mass+4927.0)/727.5)
-										#print mass, ae
-										if mass < 120: ae = float("inf")
-										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-				else: # is electron
-						if "BB" in plotObj.fileName:
-								for i in range(1, hist.GetSize()-1):
-										mass = hist.GetBinCenter(i)
-										ae = 0.5947-440.1/(mass+393) + 47630.0/(mass**2+108000)
-										#print mass, ae
-										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-						elif "BE" in plotObj.fileName:
-								for i in range(1, hist.GetSize()-1):
-										mass = hist.GetBinCenter(i)
-										ae = 0.01718+468.9/(mass+575.6)-113300.0/(mass**2+82800)+13740000.0/(mass**3+23380000)
-										#print mass, ae
-										hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
-                                                                                
+				elif year == 2017:
+					if plotObj.muon:
+							if "BB" in plotObj.fileName:
+									for i in range(1, hist.GetSize()-1):
+											mass = hist.GetBinCenter(i)
+											if mass < 600:
+													ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
+											else:
+													ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
+											#print mass, ae
+											if mass < 120: ae = float("inf")
+											hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+							elif "BE" in plotObj.fileName:
+									for i in range(1, hist.GetSize()-1):
+											mass = hist.GetBinCenter(i)
+											if mass < 450:
+													ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
+											else:
+													ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
+											#print mass, ae
+											if mass < 120: ae = float("inf")
+											hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+					else: # is electron
+							if "BB" in plotObj.fileName:
+									for i in range(1, hist.GetSize()-1):
+											mass = hist.GetBinCenter(i)
+											ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
+											#print mass, ae
+											hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+							elif "BE" in plotObj.fileName:
+									for i in range(1, hist.GetSize()-1):
+											mass = hist.GetBinCenter(i)
+											ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
+											#print mass, ae
+											hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+				elif year == 2018:
+						if plotObj.muon:
+								if "BB" in plotObj.fileName:
+										for i in range(1, hist.GetSize()-1):
+												mass = hist.GetBinCenter(i)
+												if mass < 600:
+														ae = 2.14-0.1286*math.exp(-(mass-110.6)/22.44)-2.366*mass**(-0.03382)
+												else:
+														ae = 5.18-58450.0/(mass+11570.0)-0.0002255*mass
+												#print mass, ae
+												if mass < 120: ae = float("inf")
+												hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+								elif "BE" in plotObj.fileName:
+										for i in range(1, hist.GetSize()-1):
+												mass = hist.GetBinCenter(i)
+												if mass < 450:
+														ae = 13.4-6.693*math.exp((mass+4852000.0)/7437000.0)-81.43*mass**(-1.068)
+												else:
+														ae = 0.3154+0.04561*mass**1.362*math.exp(-(mass+4927.0)/727.5)
+												#print mass, ae
+												if mass < 120: ae = float("inf")
+												hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+						else: # is electron
+								if "BB" in plotObj.fileName:
+										for i in range(1, hist.GetSize()-1):
+												mass = hist.GetBinCenter(i)
+												ae = 0.5947-440.1/(mass+393) + 47630.0/(mass**2+108000)
+												#print mass, ae
+												hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+								elif "BE" in plotObj.fileName:
+										for i in range(1, hist.GetSize()-1):
+												mass = hist.GetBinCenter(i)
+												ae = 0.01718+468.9/(mass+575.6)-113300.0/(mass**2+82800)+13740000.0/(mass**3+23380000)
+												#print mass, ae
+												hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
+																				
 def Stacks(processes,lumi,plot,zScale):
-        stacks=[]
-        for i in range(3):
-                stacks.append(TheStack(processes[i],lumi[i],plot,zScale[i]))
-        return stacks
+		stacks=[]
+		for i in range(3):
+				stacks.append(TheStack(processes[i],lumi[i],plot,zScale[i]))
+		return stacks
 def Addhist(histlist):
-        tempHist=histlist[0]
-        for i in range(1,3):
-                tempHist.Add(histlist[i])
-        return tempHist         
+		tempHist=histlist[0]
+		for i in range(1,3):
+				tempHist.Add(histlist[i])
+		return tempHist         
 def Addstack(Stacklist):
-        tempStack=Stacklist[0]
-        for i in range(1,3):
-                tempStack.Add(Stacklist[i])
-        return tempStack                                                                                                                                                                          
+		tempStack=Stacklist[0]
+		for i in range(1,3):
+				tempStack.Add(Stacklist[i])
+		return tempStack                                                                                                                                                                          
 def plotDataMC(args,plot_mu,plot_el):
 	
 
@@ -239,12 +239,12 @@ def plotDataMC(args,plot_mu,plot_el):
 	colors = createMyColors()		
 	if args.use2016:
 		data_mu = Process(Data2016, normalized=True)
-                data_el = Process(Data2018, normalized=True)
+		data_el = Process(Data2018, normalized=True)
 	elif args.use2018:
 		data_mu = Process(Data2018, normalized=True)
 		data_el = Process(Data2018, normalized=True)
-        elif args.useall:
-                data_all=[Process(Data2016, normalized=True),Process(Data, normalized=True),Process(Data2018, normalized=True)]              
+	elif args.useall:
+		data_all=[Process(Data2016, normalized=True),Process(Data, normalized=True),Process(Data2018, normalized=True)]              
 	else:	
 		data_mu = Process(Data, normalized=True)
 		data_el = Process(Data, normalized=True)
@@ -262,12 +262,12 @@ def plotDataMC(args,plot_mu,plot_el):
 		backgrounds.insert(0,"Jets")
 	processes_mu = []
 	processes_el = []
-        processes_mu2016=[]
-        processes_mu2017=[]
-        processes_mu2018=[]
-        processes_el2016=[]
-        processes_el2017=[]
-        processes_el2018=[]
+	processes_mu2016=[]
+	processes_mu2017=[]
+	processes_mu2018=[]
+	processes_el2016=[]
+	processes_el2017=[]
+	processes_el2018=[]
 	for background in backgrounds:
 		if args.use2016:
 			if background == "Jets":
@@ -276,39 +276,39 @@ def plotDataMC(args,plot_mu,plot_el):
 			else:	
 				processes_mu.append(Process(getattr(Backgrounds2016,background),eventCounts_mu,negWeights_mu))
 				processes_el.append(Process(getattr(Backgrounds2016,background),eventCounts_el,negWeights_el))
-                elif args.use2018:
-                        if background == "Jets":
-                                processes_mu.append(Process(getattr(Backgrounds2018,background),eventCounts_mu,negWeights_mu,normalized=True))
-                                processes_el.append(Process(getattr(Backgrounds2018,background),eventCounts_el,negWeights_el,normalized=True))
-                        else:
-                                processes_mu.append(Process(getattr(Backgrounds2018,background),eventCounts_mu,negWeights_mu))
-                                processes_el.append(Process(getattr(Backgrounds2018,background),eventCounts_el,negWeights_el))
-                elif args.useall:
-                        if background == "Jets":
-                                processes_mu2016.append(Process(getattr(Backgrounds2016,background),eventCounts_mu,negWeights_mu,normalized=True))
-                                processes_el2016.append(Process(getattr(Backgrounds2016,background),eventCounts_el,negWeights_el,normalized=True))
-                                processes_mu2017.append(Process(getattr(Backgrounds,background),eventCounts_mu,negWeights_mu,normalized=True))
-                                processes_el2017.append(Process(getattr(Backgrounds,background),eventCounts_el,negWeights_el,normalized=True))
-                                processes_mu2018.append(Process(getattr(Backgrounds2018,background),eventCounts_mu,negWeights_mu,normalized=True))
-                                processes_el2018.append(Process(getattr(Backgrounds2018,background),eventCounts_el,negWeights_el,normalized=True))
-                                processes_mu=[processes_mu2016,processes_mu2017,processes_mu2018]
-                                processes_el=[processes_mu2016,processes_mu2017,processes_mu2018]
-                        else:
-                                processes_mu2016.append(Process(getattr(Backgrounds2016,background),eventCounts_mu,negWeights_mu))
-                                processes_el2016.append(Process(getattr(Backgrounds2016,background),eventCounts_el,negWeights_el))
-                                processes_mu2017.append(Process(getattr(Backgrounds,background),eventCounts_mu,negWeights_mu))
-                                processes_el2017.append(Process(getattr(Backgrounds,background),eventCounts_el,negWeights_el))
-                                processes_mu2018.append(Process(getattr(Backgrounds2018,background),eventCounts_mu,negWeights_mu))
-                                processes_el2018.append(Process(getattr(Backgrounds2018,background),eventCounts_el,negWeights_el))
-                                processes_mu=[processes_mu2016,processes_mu2017,processes_mu2018]
-                                processes_el=[processes_mu2016,processes_mu2017,processes_mu2018]
-                else:             
-                        if background == "Jets":
-                                processes_mu.append(Process(getattr(Backgrounds,background),eventCounts_mu,negWeights_mu,normalized=True))
-                                processes_el.append(Process(getattr(Backgrounds,background),eventCounts_el,negWeights_el,normalized=True))
-                        else:
-                                processes_mu.append(Process(getattr(Backgrounds,background),eventCounts_mu,negWeights_mu))
-                                processes_el.append(Process(getattr(Backgrounds,background),eventCounts_el,negWeights_el))
+		elif args.use2018:
+				if background == "Jets":
+						processes_mu.append(Process(getattr(Backgrounds2018,background),eventCounts_mu,negWeights_mu,normalized=True))
+						processes_el.append(Process(getattr(Backgrounds2018,background),eventCounts_el,negWeights_el,normalized=True))
+				else:
+						processes_mu.append(Process(getattr(Backgrounds2018,background),eventCounts_mu,negWeights_mu))
+						processes_el.append(Process(getattr(Backgrounds2018,background),eventCounts_el,negWeights_el))
+		elif args.useall:
+				if background == "Jets":
+						processes_mu2016.append(Process(getattr(Backgrounds2016,background),eventCounts_mu,negWeights_mu,normalized=True))
+						processes_el2016.append(Process(getattr(Backgrounds2016,background),eventCounts_el,negWeights_el,normalized=True))
+						processes_mu2017.append(Process(getattr(Backgrounds,background),eventCounts_mu,negWeights_mu,normalized=True))
+						processes_el2017.append(Process(getattr(Backgrounds,background),eventCounts_el,negWeights_el,normalized=True))
+						processes_mu2018.append(Process(getattr(Backgrounds2018,background),eventCounts_mu,negWeights_mu,normalized=True))
+						processes_el2018.append(Process(getattr(Backgrounds2018,background),eventCounts_el,negWeights_el,normalized=True))
+						processes_mu=[processes_mu2016,processes_mu2017,processes_mu2018]
+						processes_el=[processes_mu2016,processes_mu2017,processes_mu2018]
+				else:
+						processes_mu2016.append(Process(getattr(Backgrounds2016,background),eventCounts_mu,negWeights_mu))
+						processes_el2016.append(Process(getattr(Backgrounds2016,background),eventCounts_el,negWeights_el))
+						processes_mu2017.append(Process(getattr(Backgrounds,background),eventCounts_mu,negWeights_mu))
+						processes_el2017.append(Process(getattr(Backgrounds,background),eventCounts_el,negWeights_el))
+						processes_mu2018.append(Process(getattr(Backgrounds2018,background),eventCounts_mu,negWeights_mu))
+						processes_el2018.append(Process(getattr(Backgrounds2018,background),eventCounts_el,negWeights_el))
+						processes_mu=[processes_mu2016,processes_mu2017,processes_mu2018]
+						processes_el=[processes_mu2016,processes_mu2017,processes_mu2018]
+		else:             
+				if background == "Jets":
+						processes_mu.append(Process(getattr(Backgrounds,background),eventCounts_mu,negWeights_mu,normalized=True))
+						processes_el.append(Process(getattr(Backgrounds,background),eventCounts_el,negWeights_el,normalized=True))
+				else:
+						processes_mu.append(Process(getattr(Backgrounds,background),eventCounts_mu,negWeights_mu))
+						processes_el.append(Process(getattr(Backgrounds,background),eventCounts_el,negWeights_el))
 
 	
 	legend = TLegend(0.55, 0.75, 0.925, 0.925)
@@ -346,40 +346,40 @@ def plotDataMC(args,plot_mu,plot_el):
 		legend.AddEntry(legendHistData_el,"Data #rightarrow e^{+}e^{-}", "pe")
 		legend.AddEntry(dy_mu, "MC Inclusive #rightarrow #mu^{+}#mu^{-}", "l")
 		legend.AddEntry(dy_el, "MC Inclusive #rightarrow e^{+}e^{-}", "l")
-         	
-        if args.useall:
-                for i in range(3):
-                        for process in reversed(processes_mu[i]):
-                                if not plot_mu["default"].muon and "#mu^{+}#mu^{-}" in process.label:
-                                        process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
-                                process.theColor = ROOT.kBlue
-                                process.theLineColor = ROOT.kBlue
-                                temphist = ROOT.TH1F()
-                                temphist.SetFillColor(process.theColor)
+		 	
+		if args.useall:
+				for i in range(3):
+						for process in reversed(processes_mu[i]):
+								if not plot_mu["default"].muon and "#mu^{+}#mu^{-}" in process.label:
+										process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
+								process.theColor = ROOT.kBlue
+								process.theLineColor = ROOT.kBlue
+								temphist = ROOT.TH1F()
+								temphist.SetFillColor(process.theColor)
 
-                        for process in reversed(processes_el[i]):
-                                if not plot_el["default"].muon and "#mu^{+}#mu^{-}" in process.label:
-                                        process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
-                                process.theColor = ROOT.kRed
-                                process.theLineColor = ROOT.kRed
-                                temphist = ROOT.TH1F()
-                                temphist.SetFillColor(process.theColor)
-        else:
-	        for process in reversed(processes_mu):
-		        if not plot_mu["default"].muon and "#mu^{+}#mu^{-}" in process.label:
-			        process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
-		                process.theColor = ROOT.kBlue
-		                process.theLineColor = ROOT.kBlue
-		                temphist = ROOT.TH1F()
-		                temphist.SetFillColor(process.theColor)
+						for process in reversed(processes_el[i]):
+								if not plot_el["default"].muon and "#mu^{+}#mu^{-}" in process.label:
+										process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
+								process.theColor = ROOT.kRed
+								process.theLineColor = ROOT.kRed
+								temphist = ROOT.TH1F()
+								temphist.SetFillColor(process.theColor)
+		else:
+			for process in reversed(processes_mu):
+				if not plot_mu["default"].muon and "#mu^{+}#mu^{-}" in process.label:
+					process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
+					process.theColor = ROOT.kBlue
+					process.theLineColor = ROOT.kBlue
+					temphist = ROOT.TH1F()
+					temphist.SetFillColor(process.theColor)
 	
-	        for process in reversed(processes_el):
-		         if not plot_el["default"].muon and "#mu^{+}#mu^{-}" in process.label:
-			         process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
-		                 process.theColor = ROOT.kRed
-		                 process.theLineColor = ROOT.kRed
-		                 temphist = ROOT.TH1F()
-		                 temphist.SetFillColor(process.theColor)
+			for process in reversed(processes_el):
+				 if not plot_el["default"].muon and "#mu^{+}#mu^{-}" in process.label:
+					 process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
+					 process.theColor = ROOT.kRed
+					 process.theLineColor = ROOT.kRed
+					 temphist = ROOT.TH1F()
+					 temphist.SetFillColor(process.theColor)
 
 	# Modify plot pad information	
 	nEvents=-1
@@ -423,9 +423,9 @@ def plotDataMC(args,plot_mu,plot_el):
 	elif args.use2018:	
 		lumi_el = 59.97*1000
 		lumi_mu = 61.608*1000
-        elif args.useall:
-                lumi_el = [35.9*1000,41.529*1000,59.97*1000]
-                lumi_mu = [36.3*1000,42.135*1000,61.608*1000]
+	elif args.useall:
+		lumi_el = [35.9*1000,41.529*1000,59.97*1000]
+		lumi_mu = [36.3*1000,42.135*1000,61.608*1000]
 	else:
 		lumi_el = 41.529*1000
 		lumi_mu = 42.135*1000
@@ -435,45 +435,45 @@ def plotDataMC(args,plot_mu,plot_el):
 	elif args.use2018:		
 		zScaleFac_mu = zScale2018["muons"]
 		zScaleFac_el = zScale2018["electrons"]
-        elif args.useall:
-                zScaleFac_mu = [zScale2016["muons"],zScale["muons"],zScale2018["muons"]]
-	        zScaleFac_el = [zScale2016["electrons"],zScale["electrons"],zScale2018["electrons"]]
+	elif args.useall:
+		zScaleFac_mu = [zScale2016["muons"],zScale["muons"],zScale2018["muons"]]
+		zScaleFac_el = [zScale2016["electrons"],zScale["electrons"],zScale2018["electrons"]]
 	else:	
-                zScaleFac_mu = zScale["muons"]
+		zScaleFac_mu = zScale["muons"]
 		zScaleFac_el = zScale["electrons"]
 	
 			
 	# Data and background loading
-        if args.useall:
-                datamu=[]
-                datael=[]
-                for i in range(3):
-                        datamu.append(data_all[i].loadHistogram(plot_mu["default"],lumi_mu[i],zScaleFac_mu[i]))
-                        datael.append(data_all[i].loadHistogram(plot_el["default"],lumi_el[i],zScaleFac_el[i]))
-                stackmu = Stacks(processes_mu,lumi_mu,plot_mu["default"],zScaleFac_mu)
-                mu_scaleup=Stacks(processes_mu,lumi_mu,plot_mu["scale_up"],zScaleFac_mu)
-                mu_scaledown=Stacks(processes_mu,lumi_mu,plot_mu["scale_down"],zScaleFac_mu)
-                mu_ID=Stacks(processes_mu,lumi_mu,plot_mu["ID"],zScaleFac_mu)
-                mu_reso=Stacks(processes_mu,lumi_mu,plot_mu["reso"],zScaleFac_mu)
-                stackel = Stacks(processes_el,lumi_el,plot_el["default"],zScaleFac_el)
-                el_scaleup=Stacks(processes_el,lumi_el,plot_el["scale_up"],zScaleFac_el)
-                el_scaledown=Stacks(processes_el,lumi_el,plot_el["scale_down"],zScaleFac_el)
-                el_PUup=Stacks(processes_el,lumi_el,plot_el["PU_up"],zScaleFac_el)
-                el_PUdown=Stacks(processes_el,lumi_el,plot_el["PU_down"],zScaleFac_el)
-        else:	
-	        datamu = data_mu.loadHistogram(plot_mu["default"],lumi_mu,zScaleFac_mu)
-	        datael = data_el.loadHistogram(plot_el["default"],lumi_el,zScaleFac_el)
-	        stackmu = TheStack(processes_mu,lumi_mu,plot_mu["default"],zScaleFac_mu)
-	        mu_scaleup=TheStack(processes_mu,lumi_mu,plot_mu["scale_up"],zScaleFac_mu)
-	        mu_scaledown=TheStack(processes_mu,lumi_mu,plot_mu["scale_down"],zScaleFac_mu)
-	        mu_ID=TheStack(processes_mu,lumi_mu,plot_mu["ID"],zScaleFac_mu)
-	        mu_reso=TheStack(processes_mu,lumi_mu,plot_mu["reso"],zScaleFac_mu)
+		if args.useall:
+				datamu=[]
+				datael=[]
+				for i in range(3):
+						datamu.append(data_all[i].loadHistogram(plot_mu["default"],lumi_mu[i],zScaleFac_mu[i]))
+						datael.append(data_all[i].loadHistogram(plot_el["default"],lumi_el[i],zScaleFac_el[i]))
+				stackmu = Stacks(processes_mu,lumi_mu,plot_mu["default"],zScaleFac_mu)
+				mu_scaleup=Stacks(processes_mu,lumi_mu,plot_mu["scale_up"],zScaleFac_mu)
+				mu_scaledown=Stacks(processes_mu,lumi_mu,plot_mu["scale_down"],zScaleFac_mu)
+				mu_ID=Stacks(processes_mu,lumi_mu,plot_mu["ID"],zScaleFac_mu)
+				mu_reso=Stacks(processes_mu,lumi_mu,plot_mu["reso"],zScaleFac_mu)
+				stackel = Stacks(processes_el,lumi_el,plot_el["default"],zScaleFac_el)
+				el_scaleup=Stacks(processes_el,lumi_el,plot_el["scale_up"],zScaleFac_el)
+				el_scaledown=Stacks(processes_el,lumi_el,plot_el["scale_down"],zScaleFac_el)
+				el_PUup=Stacks(processes_el,lumi_el,plot_el["PU_up"],zScaleFac_el)
+				el_PUdown=Stacks(processes_el,lumi_el,plot_el["PU_down"],zScaleFac_el)
+		else:	
+			datamu = data_mu.loadHistogram(plot_mu["default"],lumi_mu,zScaleFac_mu)
+			datael = data_el.loadHistogram(plot_el["default"],lumi_el,zScaleFac_el)
+			stackmu = TheStack(processes_mu,lumi_mu,plot_mu["default"],zScaleFac_mu)
+			mu_scaleup=TheStack(processes_mu,lumi_mu,plot_mu["scale_up"],zScaleFac_mu)
+			mu_scaledown=TheStack(processes_mu,lumi_mu,plot_mu["scale_down"],zScaleFac_mu)
+			mu_ID=TheStack(processes_mu,lumi_mu,plot_mu["ID"],zScaleFac_mu)
+			mu_reso=TheStack(processes_mu,lumi_mu,plot_mu["reso"],zScaleFac_mu)
 			
-	        stackel = TheStack(processes_el,lumi_el,plot_el["default"],zScaleFac_el)
-	        el_scaleup=TheStack(processes_el,lumi_el,plot_el["scale_up"],zScaleFac_el)
-	        el_scaledown=TheStack(processes_el,lumi_el,plot_el["scale_down"],zScaleFac_el)
-	        el_PUup=TheStack(processes_el,lumi_el,plot_el["PU_up"],zScaleFac_el)
-	        el_PUdown=TheStack(processes_el,lumi_el,plot_el["PU_down"],zScaleFac_el)
+			stackel = TheStack(processes_el,lumi_el,plot_el["default"],zScaleFac_el)
+			el_scaleup=TheStack(processes_el,lumi_el,plot_el["scale_up"],zScaleFac_el)
+			el_scaledown=TheStack(processes_el,lumi_el,plot_el["scale_down"],zScaleFac_el)
+			el_PUup=TheStack(processes_el,lumi_el,plot_el["PU_up"],zScaleFac_el)
+			el_PUdown=TheStack(processes_el,lumi_el,plot_el["PU_down"],zScaleFac_el)
 	
 	if args.znorm:
 		muheight = stackmu.theHistogram.FindBin(90)
@@ -498,66 +498,66 @@ def plotDataMC(args,plot_mu,plot_el):
 		datael.Scale(1./znum)
 	
 	if args.ae:
-                if args.useall:
-                        i=0
-                        Errs_mu=[]
-                        Errs_el=[]
-                        for year in range(2016,2019):
-                                 for h in stackmu[i].theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
-                                 for h in stackel[i].theStack.GetHists(): inverseAE(h, plot_el["default"], year)
-                                 inverseAE(stackmu[i].theHistogram, plot_mu["default"], year)
-                                 inverseAE(stackel[i].theHistogram, plot_el["default"], year)
-                                 inverseAE(mu_scaleup[i].theHistogram, plot_mu["scale_up"], year)
-                                 inverseAE(mu_scaledown[i].theHistogram, plot_mu["scale_down"], year)
-                                 inverseAE(mu_ID[i].theHistogram, plot_mu["ID"], year)
-                                 inverseAE(mu_reso[i].theHistogram, plot_mu["reso"], year)
-                                 inverseAE(el_scaleup[i].theHistogram, plot_el["scale_up"], year)
-                                 inverseAE(el_scaledown[i].theHistogram, plot_el["scale_down"], year)
-                                 inverseAE(el_PUup[i].theHistogram, plot_el["PU_up"], year)
-                                 inverseAE(el_PUdown[i].theHistogram, plot_el["PU_down"], year)
-                                 inverseAE(datamu[i], plot_mu["default"], year)
-                                 inverseAE(datael[i], plot_el["default"], year)
-                                 lis_mu=[[mu_scaleup[i].theHistogram,mu_scaledown[i].theHistogram],mu_ID[i].theHistogram,mu_reso[i].theHistogram]
-                                 lis_el=[[el_scaleup[i].theHistogram,el_scaledown[i].theHistogram],[el_PUup[i].theHistogram,el_PUdown[i].theHistogram]]
-                                 Errs_mu.append(getErrors(stackmu[i].theHistogram,lis_mu))
-                                 Errs_el.append(getErrors(stackel[i].theHistogram,lis_el))
-                                 i+=1
-                        errmu=Errs_mu[0]+Errs_mu[1]+Errs_mu[2]
-                        errel=Errs_el[0]+Errs_el[1]+Errs_el[2]         
-                        stackmu=Addstack(stackmu)
-                        stackel=Addstack(stackel)
-                        mu_scaleup=Addstack(mu_scaleup)
-                        mu_scaledown=Addstack(mu_scaledown)
-                        mu_ID=Addstack(mu_ID)
-                        mu_reso=Addstack(mu_reso)
-                        el_scaleup=Addstack(el_scaleup)
-                        el_scaledown=Addstack(el_scaledown)
-                        el_PUup=Addstack(el_PUup)
-                        el_PUdown=Addstack(el_PUdown)
-                        datamu=Addhist(datamu)
-                        datael=Addhist(datael)               
-                else:
-                        if args.use2016: year = 2016
-		        elif args.use2018: year = 2018
-                        else: year =2017
-		        for h in stackmu.theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
-		        for h in stackel.theStack.GetHists(): inverseAE(h, plot_el["default"], year)
-		        inverseAE(stackmu.theHistogram, plot_mu["default"], year)
-		        inverseAE(stackel.theHistogram, plot_el["default"], year)
-		        inverseAE(mu_scaleup.theHistogram, plot_mu["scale_up"], year)
-		        inverseAE(mu_scaledown.theHistogram, plot_mu["scale_down"], year)
-		        inverseAE(mu_ID.theHistogram, plot_mu["ID"], year)
-		        inverseAE(mu_reso.theHistogram, plot_mu["reso"], year)
-		        inverseAE(el_scaleup.theHistogram, plot_el["scale_up"], year)
-		        inverseAE(el_scaledown.theHistogram, plot_el["scale_down"], year)
-		        inverseAE(el_PUup.theHistogram, plot_el["PU_up"], year)
-		        inverseAE(el_PUdown.theHistogram, plot_el["PU_down"], year)
-		        inverseAE(datamu, plot_mu["default"], year)
-		        inverseAE(datael, plot_el["default"], year)
-	                lis_mu=[[mu_scaleup.theHistogram,mu_scaledown.theHistogram],mu_ID.theHistogram,mu_reso.theHistogram]
-                        lis_el=[[el_scaleup.theHistogram,el_scaledown.theHistogram],[el_PUup.theHistogram,el_PUdown.theHistogram]]
-                        errmu=getErrors(stackmu.theHistogram,lis_mu)
-                        errel=getErrors(stackel.theHistogram,lis_el)
+				if args.useall:
+						i=0
+						Errs_mu=[]
+						Errs_el=[]
+						for year in range(2016,2019):
+								 for h in stackmu[i].theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
+								 for h in stackel[i].theStack.GetHists(): inverseAE(h, plot_el["default"], year)
+								 inverseAE(stackmu[i].theHistogram, plot_mu["default"], year)
+								 inverseAE(stackel[i].theHistogram, plot_el["default"], year)
+								 inverseAE(mu_scaleup[i].theHistogram, plot_mu["scale_up"], year)
+								 inverseAE(mu_scaledown[i].theHistogram, plot_mu["scale_down"], year)
+								 inverseAE(mu_ID[i].theHistogram, plot_mu["ID"], year)
+								 inverseAE(mu_reso[i].theHistogram, plot_mu["reso"], year)
+								 inverseAE(el_scaleup[i].theHistogram, plot_el["scale_up"], year)
+								 inverseAE(el_scaledown[i].theHistogram, plot_el["scale_down"], year)
+								 inverseAE(el_PUup[i].theHistogram, plot_el["PU_up"], year)
+								 inverseAE(el_PUdown[i].theHistogram, plot_el["PU_down"], year)
+								 inverseAE(datamu[i], plot_mu["default"], year)
+								 inverseAE(datael[i], plot_el["default"], year)
+								 lis_mu=[[mu_scaleup[i].theHistogram,mu_scaledown[i].theHistogram],mu_ID[i].theHistogram,mu_reso[i].theHistogram]
+								 lis_el=[[el_scaleup[i].theHistogram,el_scaledown[i].theHistogram],[el_PUup[i].theHistogram,el_PUdown[i].theHistogram]]
+								 Errs_mu.append(getErrors(stackmu[i].theHistogram,lis_mu))
+								 Errs_el.append(getErrors(stackel[i].theHistogram,lis_el))
+								 i+=1
+						errmu=Errs_mu[0]+Errs_mu[1]+Errs_mu[2]
+						errel=Errs_el[0]+Errs_el[1]+Errs_el[2]         
+						stackmu=Addstack(stackmu)
+						stackel=Addstack(stackel)
+						mu_scaleup=Addstack(mu_scaleup)
+						mu_scaledown=Addstack(mu_scaledown)
+						mu_ID=Addstack(mu_ID)
+						mu_reso=Addstack(mu_reso)
+						el_scaleup=Addstack(el_scaleup)
+						el_scaledown=Addstack(el_scaledown)
+						el_PUup=Addstack(el_PUup)
+						el_PUdown=Addstack(el_PUdown)
+						datamu=Addhist(datamu)
+						datael=Addhist(datael)               
+				else:
+					if args.use2016: year = 2016
+					elif args.use2018: year = 2018
+					else: year =2017
+				for h in stackmu.theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
+				for h in stackel.theStack.GetHists(): inverseAE(h, plot_el["default"], year)
+				inverseAE(stackmu.theHistogram, plot_mu["default"], year)
+				inverseAE(stackel.theHistogram, plot_el["default"], year)
+				inverseAE(mu_scaleup.theHistogram, plot_mu["scale_up"], year)
+				inverseAE(mu_scaledown.theHistogram, plot_mu["scale_down"], year)
+				inverseAE(mu_ID.theHistogram, plot_mu["ID"], year)
+				inverseAE(mu_reso.theHistogram, plot_mu["reso"], year)
+				inverseAE(el_scaleup.theHistogram, plot_el["scale_up"], year)
+				inverseAE(el_scaledown.theHistogram, plot_el["scale_down"], year)
+				inverseAE(el_PUup.theHistogram, plot_el["PU_up"], year)
+				inverseAE(el_PUdown.theHistogram, plot_el["PU_down"], year)
+				inverseAE(datamu, plot_mu["default"], year)
+				inverseAE(datael, plot_el["default"], year)
+				lis_mu=[[mu_scaleup.theHistogram,mu_scaledown.theHistogram],mu_ID.theHistogram,mu_reso.theHistogram]
+				lis_el=[[el_scaleup.theHistogram,el_scaledown.theHistogram],[el_PUup.theHistogram,el_PUdown.theHistogram]]
+				errmu=getErrors(stackmu.theHistogram,lis_mu)
+				errel=getErrors(stackel.theHistogram,lis_el)
 	if args.data:
 		yMax = datamu.GetBinContent(datamu.GetMaximumBin())
 		if "Mass" in plot_mu["default"].fileName:
@@ -595,10 +595,10 @@ def plotDataMC(args,plot_mu,plot_el):
 		xMax = 2000
 		yMin *= 10000
 		yMax /= 10
-        if args.useall:
-                vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","3 years data"))
-        else:
-	        vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","Lumi #times d#sigma(pp#rightarrow ll)"))
+		if args.useall:
+				vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","3 years data"))
+		else:
+			vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","Lumi #times d#sigma(pp#rightarrow ll)"))
 	vh.GetXaxis().SetMoreLogLabels()
 	
 	drawStack_mu = stackmu
@@ -627,10 +627,10 @@ def plotDataMC(args,plot_mu,plot_el):
 		legend.Draw()
 
 	plotPad.SetLogx(plot_mu["default"].logX)
-        if args.useall:
-                latex.DrawLatex(0.95, 0.96, "three years data")
-        else:	
-	        latex.DrawLatex(0.95, 0.96, "%.3f fb^{-1} (13 TeV, #mu#mu), %.3f fb^{-1} (13 TeV, ee)"%(lumi_mu*0.001, lumi_el*0.001))
+	if args.useall:
+			latex.DrawLatex(0.95, 0.96, "three years data")
+	else:	
+		latex.DrawLatex(0.95, 0.96, "%.3f fb^{-1} (13 TeV, #mu#mu), %.3f fb^{-1} (13 TeV, ee)"%(lumi_mu*0.001, lumi_el*0.001))
 	yLabelPos = 0.85
 	cmsExtra = "Private Work"
 	if not args.data:
@@ -655,15 +655,15 @@ def plotDataMC(args,plot_mu,plot_el):
 		h_el_PUdown=el_PUdown.theHistogram
 		ratioGraphs = ROOT.TGraphAsymmErrors(hhmu.GetSize()-2)
 		chann = True if "BB" in plot_mu["default"].fileName else False
-                print(errel)
-                print(errmu)
+		print(errel)
+		print(errmu)
 		for i in range(1, hhmu.GetSize()-1):
 			xval = hhmu.GetBinCenter(i)
 			xerr = hhmu.GetBinWidth(i)/2
 			if hhel.GetBinContent(i) == 0: continue
 			if hhmu.GetBinContent(i) == 0: continue
 			yval = hhmu.GetBinContent(i)*1.0/hhel.GetBinContent(i)
-                        yerr = yval*math.sqrt((errel[i-1]/hhel.GetBinContent(i))**2+(errmu[i-1]/hhmu.GetBinContent(i))**2)
+			yerr = yval*math.sqrt((errel[i-1]/hhel.GetBinContent(i))**2+(errmu[i-1]/hhmu.GetBinContent(i))**2)
 			ratioGraphs.SetPoint(i, xval, yval)
 			ratioGraphs.SetPointError(i, xerr, xerr, yerr, yerr)
 			if xval > 1000 and xval < 2000: print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
@@ -672,9 +672,9 @@ def plotDataMC(args,plot_mu,plot_el):
 			xval = datamu.GetBinCenter(i)
 			xerr = datamu.GetBinWidth(i)/2
 			if datael.GetBinContent(i) == 0: continue
-                        if datamu.GetBinContent(i) == 0: continue
-                        print(datael.GetBinContent(i))
-                        print(datael.GetBinError(i))
+			if datamu.GetBinContent(i) == 0: continue
+			print(datael.GetBinContent(i))
+			print(datael.GetBinError(i))
 			yval = datamu.GetBinContent(i)*1.0/datael.GetBinContent(i)
 			yerr = yval*math.sqrt((datamu.GetBinError(i)/datamu.GetBinContent(i))**2+(datael.GetBinError(i)/datael.GetBinContent(i))**2)
 			ratioData.SetPoint(i, xval, yval)
@@ -723,7 +723,7 @@ def plotDataMC(args,plot_mu,plot_el):
 		os.makedirs("lepFlavor")	
 
 	if args.use2016: year = "2016"
-        elif args.useall: year = "2016_to_2018"
+	elif args.useall: year = "2016_to_2018"
 	elif args.use2018: year = "2018"
 	else: year = "2017"
 
@@ -759,7 +759,7 @@ if __name__ == "__main__":
 						  help="backgrounds to plot.")
 	parser.add_argument("--ae", action="store_true", dest="ae", default=False,help="times inverse Acceptance x Efficiency")
 	parser.add_argument("--znorm", action="store_true", dest="znorm", default=False, help="normalize to z peak")
-        parser.add_argument("--all", action="store_true", dest="useall", default=False, help="add the data from 2016 to 2018")
+	parser.add_argument("--all", action="store_true", dest="useall", default=False, help="add the data from 2016 to 2018")
 	args = parser.parse_args()
 	if len(args.backgrounds) == 0:
 		args.backgrounds = ["Wjets","Other","DrellYan"]
