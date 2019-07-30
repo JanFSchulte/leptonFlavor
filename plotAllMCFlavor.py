@@ -77,16 +77,16 @@ def getErrors(default, others):
 	errs=np.zeros(len(dfarr))
 	for other in others:
 		if type(other)==list:
-			   err1=root_numpy.hist2array(other[0])-dfarr
-			   err1=err1**2
-			   err2=root_numpy.hist2array(other[1])-dfarr
-			   err2=err2**2
-			   err=np.maximum(err1,err2)
-			   errs+=err
+			err1=root_numpy.hist2array(other[0])-dfarr
+			err1=err1**2
+			err2=root_numpy.hist2array(other[1])-dfarr
+			err2=err2**2
+			err=np.maximum(err1,err2)
+			errs+=err
 		else:           
-			   err=root_numpy.hist2array(other)-dfarr
-			   err=err**2
-			   errs+=err
+			err=root_numpy.hist2array(other)-dfarr
+			err=err**2
+			errs+=err
 	return err                            
 
 # multiply hist by 1/(Acceptance x Efficiency)
@@ -201,20 +201,20 @@ def inverseAE(hist, plotObj, year):
 									hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 																				
 def Stacks(processes,lumi,plot,zScale):
-		stacks=[]
-		for i in range(3):
-				stacks.append(TheStack(processes[i],lumi[i],plot,zScale[i]))
-		return stacks
+	stacks=[]
+	for i in range(3):
+		stacks.append(TheStack(processes[i],lumi[i],plot,zScale[i]))
+	return stacks
 def Addhist(histlist):
-		tempHist=histlist[0]
-		for i in range(1,3):
-				tempHist.Add(histlist[i])
-		return tempHist         
+	tempHist=histlist[0]
+	for i in range(1,3):
+		tempHist.Add(histlist[i])
+	return tempHist         
 def Addstack(Stacklist):
-		tempStack=Stacklist[0]
-		for i in range(1,3):
-				tempStack.Add(Stacklist[i])
-		return tempStack                                                                                                                                                                          
+	tempStack=Stacklist[0]
+	for i in range(1,3):
+		tempStack.Add(Stacklist[i])
+	return tempStack                                                                                                                                                                          
 def plotDataMC(args,plot_mu,plot_el):
 	
 
@@ -347,39 +347,39 @@ def plotDataMC(args,plot_mu,plot_el):
 		legend.AddEntry(dy_mu, "MC Inclusive #rightarrow #mu^{+}#mu^{-}", "l")
 		legend.AddEntry(dy_el, "MC Inclusive #rightarrow e^{+}e^{-}", "l")
 		 	
-		if args.useall:
-				for i in range(3):
-						for process in reversed(processes_mu[i]):
-								if not plot_mu["default"].muon and "#mu^{+}#mu^{-}" in process.label:
-										process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
-								process.theColor = ROOT.kBlue
-								process.theLineColor = ROOT.kBlue
-								temphist = ROOT.TH1F()
-								temphist.SetFillColor(process.theColor)
-
-						for process in reversed(processes_el[i]):
-								if not plot_el["default"].muon and "#mu^{+}#mu^{-}" in process.label:
-										process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
-								process.theColor = ROOT.kRed
-								process.theLineColor = ROOT.kRed
-								temphist = ROOT.TH1F()
-								temphist.SetFillColor(process.theColor)
-		else:
-			for process in reversed(processes_mu):
+	if args.useall:
+		for i in range(3):
+			for process in reversed(processes_mu[i]):
 				if not plot_mu["default"].muon and "#mu^{+}#mu^{-}" in process.label:
 					process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
-					process.theColor = ROOT.kBlue
-					process.theLineColor = ROOT.kBlue
-					temphist = ROOT.TH1F()
-					temphist.SetFillColor(process.theColor)
+				process.theColor = ROOT.kBlue
+				process.theLineColor = ROOT.kBlue
+				temphist = ROOT.TH1F()
+				temphist.SetFillColor(process.theColor)
+
+			for process in reversed(processes_el[i]):
+				if not plot_el["default"].muon and "#mu^{+}#mu^{-}" in process.label:
+					process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
+				process.theColor = ROOT.kRed
+				process.theLineColor = ROOT.kRed
+				temphist = ROOT.TH1F()
+				temphist.SetFillColor(process.theColor)
+	else:
+		for process in reversed(processes_mu):
+			if not plot_mu["default"].muon and "#mu^{+}#mu^{-}" in process.label:
+				process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
+			process.theColor = ROOT.kBlue
+			process.theLineColor = ROOT.kBlue
+			temphist = ROOT.TH1F()
+			temphist.SetFillColor(process.theColor)
 	
-			for process in reversed(processes_el):
-				 if not plot_el["default"].muon and "#mu^{+}#mu^{-}" in process.label:
-					 process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
-					 process.theColor = ROOT.kRed
-					 process.theLineColor = ROOT.kRed
-					 temphist = ROOT.TH1F()
-					 temphist.SetFillColor(process.theColor)
+		for process in reversed(processes_el):
+			if not plot_el["default"].muon and "#mu^{+}#mu^{-}" in process.label:
+				process.label = process.label.replace("#mu^{+}#mu^{-}","e^{+}e^{-}")
+			process.theColor = ROOT.kRed
+			process.theLineColor = ROOT.kRed
+			temphist = ROOT.TH1F()
+			temphist.SetFillColor(process.theColor)
 
 	# Modify plot pad information	
 	nEvents=-1
@@ -444,36 +444,36 @@ def plotDataMC(args,plot_mu,plot_el):
 	
 			
 	# Data and background loading
-		if args.useall:
-				datamu=[]
-				datael=[]
-				for i in range(3):
-						datamu.append(data_all[i].loadHistogram(plot_mu["default"],lumi_mu[i],zScaleFac_mu[i]))
-						datael.append(data_all[i].loadHistogram(plot_el["default"],lumi_el[i],zScaleFac_el[i]))
-				stackmu = Stacks(processes_mu,lumi_mu,plot_mu["default"],zScaleFac_mu)
-				mu_scaleup=Stacks(processes_mu,lumi_mu,plot_mu["scale_up"],zScaleFac_mu)
-				mu_scaledown=Stacks(processes_mu,lumi_mu,plot_mu["scale_down"],zScaleFac_mu)
-				mu_ID=Stacks(processes_mu,lumi_mu,plot_mu["ID"],zScaleFac_mu)
-				mu_reso=Stacks(processes_mu,lumi_mu,plot_mu["reso"],zScaleFac_mu)
-				stackel = Stacks(processes_el,lumi_el,plot_el["default"],zScaleFac_el)
-				el_scaleup=Stacks(processes_el,lumi_el,plot_el["scale_up"],zScaleFac_el)
-				el_scaledown=Stacks(processes_el,lumi_el,plot_el["scale_down"],zScaleFac_el)
-				el_PUup=Stacks(processes_el,lumi_el,plot_el["PU_up"],zScaleFac_el)
-				el_PUdown=Stacks(processes_el,lumi_el,plot_el["PU_down"],zScaleFac_el)
-		else:	
-			datamu = data_mu.loadHistogram(plot_mu["default"],lumi_mu,zScaleFac_mu)
-			datael = data_el.loadHistogram(plot_el["default"],lumi_el,zScaleFac_el)
-			stackmu = TheStack(processes_mu,lumi_mu,plot_mu["default"],zScaleFac_mu)
-			mu_scaleup=TheStack(processes_mu,lumi_mu,plot_mu["scale_up"],zScaleFac_mu)
-			mu_scaledown=TheStack(processes_mu,lumi_mu,plot_mu["scale_down"],zScaleFac_mu)
-			mu_ID=TheStack(processes_mu,lumi_mu,plot_mu["ID"],zScaleFac_mu)
-			mu_reso=TheStack(processes_mu,lumi_mu,plot_mu["reso"],zScaleFac_mu)
+	if args.useall:
+		datamu=[]
+		datael=[]
+		for i in range(3):
+			datamu.append(data_all[i].loadHistogram(plot_mu["default"],lumi_mu[i],zScaleFac_mu[i]))
+			datael.append(data_all[i].loadHistogram(plot_el["default"],lumi_el[i],zScaleFac_el[i]))
+		stackmu = Stacks(processes_mu,lumi_mu,plot_mu["default"],zScaleFac_mu)
+		mu_scaleup=Stacks(processes_mu,lumi_mu,plot_mu["scale_up"],zScaleFac_mu)
+		mu_scaledown=Stacks(processes_mu,lumi_mu,plot_mu["scale_down"],zScaleFac_mu)
+		mu_ID=Stacks(processes_mu,lumi_mu,plot_mu["ID"],zScaleFac_mu)
+		mu_reso=Stacks(processes_mu,lumi_mu,plot_mu["reso"],zScaleFac_mu)
+		stackel = Stacks(processes_el,lumi_el,plot_el["default"],zScaleFac_el)
+		el_scaleup=Stacks(processes_el,lumi_el,plot_el["scale_up"],zScaleFac_el)
+		el_scaledown=Stacks(processes_el,lumi_el,plot_el["scale_down"],zScaleFac_el)
+		el_PUup=Stacks(processes_el,lumi_el,plot_el["PU_up"],zScaleFac_el)
+		el_PUdown=Stacks(processes_el,lumi_el,plot_el["PU_down"],zScaleFac_el)
+	else:	
+		datamu = data_mu.loadHistogram(plot_mu["default"],lumi_mu,zScaleFac_mu)
+		datael = data_el.loadHistogram(plot_el["default"],lumi_el,zScaleFac_el)
+		stackmu = TheStack(processes_mu,lumi_mu,plot_mu["default"],zScaleFac_mu)
+		mu_scaleup=TheStack(processes_mu,lumi_mu,plot_mu["scale_up"],zScaleFac_mu)
+		mu_scaledown=TheStack(processes_mu,lumi_mu,plot_mu["scale_down"],zScaleFac_mu)
+		mu_ID=TheStack(processes_mu,lumi_mu,plot_mu["ID"],zScaleFac_mu)
+		mu_reso=TheStack(processes_mu,lumi_mu,plot_mu["reso"],zScaleFac_mu)
 			
-			stackel = TheStack(processes_el,lumi_el,plot_el["default"],zScaleFac_el)
-			el_scaleup=TheStack(processes_el,lumi_el,plot_el["scale_up"],zScaleFac_el)
-			el_scaledown=TheStack(processes_el,lumi_el,plot_el["scale_down"],zScaleFac_el)
-			el_PUup=TheStack(processes_el,lumi_el,plot_el["PU_up"],zScaleFac_el)
-			el_PUdown=TheStack(processes_el,lumi_el,plot_el["PU_down"],zScaleFac_el)
+		stackel = TheStack(processes_el,lumi_el,plot_el["default"],zScaleFac_el)
+		el_scaleup=TheStack(processes_el,lumi_el,plot_el["scale_up"],zScaleFac_el)
+		el_scaledown=TheStack(processes_el,lumi_el,plot_el["scale_down"],zScaleFac_el)
+		el_PUup=TheStack(processes_el,lumi_el,plot_el["PU_up"],zScaleFac_el)
+		el_PUdown=TheStack(processes_el,lumi_el,plot_el["PU_down"],zScaleFac_el)
 	
 	if args.znorm:
 		muheight = stackmu.theHistogram.FindBin(90)
@@ -498,66 +498,66 @@ def plotDataMC(args,plot_mu,plot_el):
 		datael.Scale(1./znum)
 	
 	if args.ae:
-				if args.useall:
-						i=0
-						Errs_mu=[]
-						Errs_el=[]
-						for year in range(2016,2019):
-								 for h in stackmu[i].theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
-								 for h in stackel[i].theStack.GetHists(): inverseAE(h, plot_el["default"], year)
-								 inverseAE(stackmu[i].theHistogram, plot_mu["default"], year)
-								 inverseAE(stackel[i].theHistogram, plot_el["default"], year)
-								 inverseAE(mu_scaleup[i].theHistogram, plot_mu["scale_up"], year)
-								 inverseAE(mu_scaledown[i].theHistogram, plot_mu["scale_down"], year)
-								 inverseAE(mu_ID[i].theHistogram, plot_mu["ID"], year)
-								 inverseAE(mu_reso[i].theHistogram, plot_mu["reso"], year)
-								 inverseAE(el_scaleup[i].theHistogram, plot_el["scale_up"], year)
-								 inverseAE(el_scaledown[i].theHistogram, plot_el["scale_down"], year)
-								 inverseAE(el_PUup[i].theHistogram, plot_el["PU_up"], year)
-								 inverseAE(el_PUdown[i].theHistogram, plot_el["PU_down"], year)
-								 inverseAE(datamu[i], plot_mu["default"], year)
-								 inverseAE(datael[i], plot_el["default"], year)
-								 lis_mu=[[mu_scaleup[i].theHistogram,mu_scaledown[i].theHistogram],mu_ID[i].theHistogram,mu_reso[i].theHistogram]
-								 lis_el=[[el_scaleup[i].theHistogram,el_scaledown[i].theHistogram],[el_PUup[i].theHistogram,el_PUdown[i].theHistogram]]
-								 Errs_mu.append(getErrors(stackmu[i].theHistogram,lis_mu))
-								 Errs_el.append(getErrors(stackel[i].theHistogram,lis_el))
-								 i+=1
-						errmu=Errs_mu[0]+Errs_mu[1]+Errs_mu[2]
-						errel=Errs_el[0]+Errs_el[1]+Errs_el[2]         
-						stackmu=Addstack(stackmu)
-						stackel=Addstack(stackel)
-						mu_scaleup=Addstack(mu_scaleup)
-						mu_scaledown=Addstack(mu_scaledown)
-						mu_ID=Addstack(mu_ID)
-						mu_reso=Addstack(mu_reso)
-						el_scaleup=Addstack(el_scaleup)
-						el_scaledown=Addstack(el_scaledown)
-						el_PUup=Addstack(el_PUup)
-						el_PUdown=Addstack(el_PUdown)
-						datamu=Addhist(datamu)
-						datael=Addhist(datael)               
-				else:
-					if args.use2016: year = 2016
-					elif args.use2018: year = 2018
-					else: year =2017
-				for h in stackmu.theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
-				for h in stackel.theStack.GetHists(): inverseAE(h, plot_el["default"], year)
-				inverseAE(stackmu.theHistogram, plot_mu["default"], year)
-				inverseAE(stackel.theHistogram, plot_el["default"], year)
-				inverseAE(mu_scaleup.theHistogram, plot_mu["scale_up"], year)
-				inverseAE(mu_scaledown.theHistogram, plot_mu["scale_down"], year)
-				inverseAE(mu_ID.theHistogram, plot_mu["ID"], year)
-				inverseAE(mu_reso.theHistogram, plot_mu["reso"], year)
-				inverseAE(el_scaleup.theHistogram, plot_el["scale_up"], year)
-				inverseAE(el_scaledown.theHistogram, plot_el["scale_down"], year)
-				inverseAE(el_PUup.theHistogram, plot_el["PU_up"], year)
-				inverseAE(el_PUdown.theHistogram, plot_el["PU_down"], year)
-				inverseAE(datamu, plot_mu["default"], year)
-				inverseAE(datael, plot_el["default"], year)
-				lis_mu=[[mu_scaleup.theHistogram,mu_scaledown.theHistogram],mu_ID.theHistogram,mu_reso.theHistogram]
-				lis_el=[[el_scaleup.theHistogram,el_scaledown.theHistogram],[el_PUup.theHistogram,el_PUdown.theHistogram]]
-				errmu=getErrors(stackmu.theHistogram,lis_mu)
-				errel=getErrors(stackel.theHistogram,lis_el)
+		if args.useall:
+			i=0
+			Errs_mu=[]
+			Errs_el=[]
+			for year in range(2016,2019):
+				for h in stackmu[i].theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
+				for h in stackel[i].theStack.GetHists(): inverseAE(h, plot_el["default"], year)
+				inverseAE(stackmu[i].theHistogram, plot_mu["default"], year)
+				inverseAE(stackel[i].theHistogram, plot_el["default"], year)
+				inverseAE(mu_scaleup[i].theHistogram, plot_mu["scale_up"], year)
+				inverseAE(mu_scaledown[i].theHistogram, plot_mu["scale_down"], year)
+				inverseAE(mu_ID[i].theHistogram, plot_mu["ID"], year)
+				inverseAE(mu_reso[i].theHistogram, plot_mu["reso"], year)
+				inverseAE(el_scaleup[i].theHistogram, plot_el["scale_up"], year)
+				inverseAE(el_scaledown[i].theHistogram, plot_el["scale_down"], year)
+				inverseAE(el_PUup[i].theHistogram, plot_el["PU_up"], year)
+				inverseAE(el_PUdown[i].theHistogram, plot_el["PU_down"], year)
+				inverseAE(datamu[i], plot_mu["default"], year)
+				inverseAE(datael[i], plot_el["default"], year)
+				lis_mu=[[mu_scaleup[i].theHistogram,mu_scaledown[i].theHistogram],mu_ID[i].theHistogram,mu_reso[i].theHistogram]
+				lis_el=[[el_scaleup[i].theHistogram,el_scaledown[i].theHistogram],[el_PUup[i].theHistogram,el_PUdown[i].theHistogram]]
+				Errs_mu.append(getErrors(stackmu[i].theHistogram,lis_mu))
+				Errs_el.append(getErrors(stackel[i].theHistogram,lis_el))
+				i+=1
+			errmu=Errs_mu[0]+Errs_mu[1]+Errs_mu[2]
+			errel=Errs_el[0]+Errs_el[1]+Errs_el[2]         
+			stackmu=Addstack(stackmu)
+			stackel=Addstack(stackel)
+			mu_scaleup=Addstack(mu_scaleup)
+			mu_scaledown=Addstack(mu_scaledown)
+			mu_ID=Addstack(mu_ID)
+			mu_reso=Addstack(mu_reso)
+			el_scaleup=Addstack(el_scaleup)
+			el_scaledown=Addstack(el_scaledown)
+			el_PUup=Addstack(el_PUup)
+			el_PUdown=Addstack(el_PUdown)
+			datamu=Addhist(datamu)
+			datael=Addhist(datael)               
+		else:
+			if args.use2016: year = 2016
+			elif args.use2018: year = 2018
+			else: year =2017
+			for h in stackmu.theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
+			for h in stackel.theStack.GetHists(): inverseAE(h, plot_el["default"], year)
+			inverseAE(stackmu.theHistogram, plot_mu["default"], year)
+			inverseAE(stackel.theHistogram, plot_el["default"], year)
+			inverseAE(mu_scaleup.theHistogram, plot_mu["scale_up"], year)
+			inverseAE(mu_scaledown.theHistogram, plot_mu["scale_down"], year)
+			inverseAE(mu_ID.theHistogram, plot_mu["ID"], year)
+			inverseAE(mu_reso.theHistogram, plot_mu["reso"], year)
+			inverseAE(el_scaleup.theHistogram, plot_el["scale_up"], year)
+			inverseAE(el_scaledown.theHistogram, plot_el["scale_down"], year)
+			inverseAE(el_PUup.theHistogram, plot_el["PU_up"], year)
+			inverseAE(el_PUdown.theHistogram, plot_el["PU_down"], year)
+			inverseAE(datamu, plot_mu["default"], year)
+			inverseAE(datael, plot_el["default"], year)
+			lis_mu=[[mu_scaleup.theHistogram,mu_scaledown.theHistogram],mu_ID.theHistogram,mu_reso.theHistogram]
+			lis_el=[[el_scaleup.theHistogram,el_scaledown.theHistogram],[el_PUup.theHistogram,el_PUdown.theHistogram]]
+			errmu=getErrors(stackmu.theHistogram,lis_mu)
+			errel=getErrors(stackel.theHistogram,lis_el)
 	if args.data:
 		yMax = datamu.GetBinContent(datamu.GetMaximumBin())
 		if "Mass" in plot_mu["default"].fileName:
@@ -596,7 +596,7 @@ def plotDataMC(args,plot_mu,plot_el):
 		yMin *= 10000
 		yMax /= 10
 		if args.useall:
-				vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","3 years data"))
+			vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","3 years data"))
 		else:
 			vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","Lumi #times d#sigma(pp#rightarrow ll)"))
 	vh.GetXaxis().SetMoreLogLabels()
@@ -628,7 +628,7 @@ def plotDataMC(args,plot_mu,plot_el):
 
 	plotPad.SetLogx(plot_mu["default"].logX)
 	if args.useall:
-			latex.DrawLatex(0.95, 0.96, "three years data")
+		latex.DrawLatex(0.95, 0.96, "three years data")
 	else:	
 		latex.DrawLatex(0.95, 0.96, "%.3f fb^{-1} (13 TeV, #mu#mu), %.3f fb^{-1} (13 TeV, ee)"%(lumi_mu*0.001, lumi_el*0.001))
 	yLabelPos = 0.85
@@ -655,8 +655,8 @@ def plotDataMC(args,plot_mu,plot_el):
 		h_el_PUdown=el_PUdown.theHistogram
 		ratioGraphs = ROOT.TGraphAsymmErrors(hhmu.GetSize()-2)
 		chann = True if "BB" in plot_mu["default"].fileName else False
-		print(errel)
-		print(errmu)
+		#print(errel)
+		#print(errmu)
 		for i in range(1, hhmu.GetSize()-1):
 			xval = hhmu.GetBinCenter(i)
 			xerr = hhmu.GetBinWidth(i)/2
@@ -673,29 +673,29 @@ def plotDataMC(args,plot_mu,plot_el):
 			xerr = datamu.GetBinWidth(i)/2
 			if datael.GetBinContent(i) == 0: continue
 			if datamu.GetBinContent(i) == 0: continue
-			print(datael.GetBinContent(i))
-			print(datael.GetBinError(i))
+			#print(datael.GetBinContent(i))
+			#print(datael.GetBinError(i))
 			yval = datamu.GetBinContent(i)*1.0/datael.GetBinContent(i)
 			yerr = yval*math.sqrt((datamu.GetBinError(i)/datamu.GetBinContent(i))**2+(datael.GetBinError(i)/datael.GetBinContent(i))**2)
 			ratioData.SetPoint(i, xval, yval)
 			ratioData.SetPointError(i, xerr, xerr, yerr, yerr)
 			if xval > 1000 and xval < 2000: print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
-			nBinsX = 20
-			nBinsY = 10
-			hAxis = ROOT.TH2F("hAxis", "", nBinsX, xMin, xMax, nBinsY, 0.5, 2.5)
-			hAxis.Draw("AXIS")
+		nBinsX = 20
+		nBinsY = 10
+		hAxis = ROOT.TH2F("hAxis", "", nBinsX, xMin, xMax, nBinsY, 0.5, 2.5)
+		hAxis.Draw("AXIS")
 
-			hAxis.GetYaxis().SetNdivisions(408)
-			hAxis.SetTitleOffset(0.4, "Y")
-			hAxis.SetTitleSize(0.15, "Y")
-			hAxis.SetYTitle("R_{#mu#mu/ee}")
-			hAxis.GetXaxis().SetLabelSize(0.0)
-			hAxis.GetYaxis().SetLabelSize(0.15)
-			hAxis.SetTitleSize(0.15, "Y")
+		hAxis.GetYaxis().SetNdivisions(408)
+		hAxis.SetTitleOffset(0.4, "Y")
+		hAxis.SetTitleSize(0.15, "Y")
+		hAxis.SetYTitle("R_{#mu#mu/ee}")
+		hAxis.GetXaxis().SetLabelSize(0.0)
+		hAxis.GetYaxis().SetLabelSize(0.15)
+		hAxis.SetTitleSize(0.15, "Y")
 		
-			oneLine = ROOT.TLine(xMin, 1.0, xMax, 1.0)
-			oneLine.SetLineStyle(2)
-			oneLine.Draw()
+		oneLine = ROOT.TLine(xMin, 1.0, xMax, 1.0)
+		oneLine.SetLineStyle(2)
+		oneLine.Draw()
 	
 		ratioGraphs.SetFillColor(ROOT.kBlue-3)
 		ratioGraphs.SetMarkerColor(ROOT.kBlue-3)
