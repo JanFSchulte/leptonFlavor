@@ -1875,7 +1875,7 @@ fileNamesEle = {
 "Data2018_RunA":"dileptonAna_electrons_2018_DoubleEGRun2018A-17Sep2018-v2.root",
 "Data2018_RunB":"dileptonAna_electrons_2018_DoubleEGRun2018B-17Sep2018-v1.root",
 "Data2018_RunC":"dileptonAna_electrons_2018_DoubleEGRun2018C-17Sep2018-v1.root",
-"Data2018_RunD":"dileptonAna_electrons_2018_DoubleEGRun2018D-PromptReco-v2.root",
+"Data2018_RunD":"dileptonAna_electrons_2018_DoubleEGRun2018D-22Jan2019-v2.root",
 
 "Wantitop":"dileptonAna_electrons_Wantitop.root",
 "tW":"dileptonAna_electrons_tW.root",
