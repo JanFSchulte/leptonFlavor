@@ -557,6 +557,7 @@ def plotDataMC(args,plot_mu,plot_el):
 			lis_mu=[[mu_scaleup.theHistogram,mu_scaledown.theHistogram],mu_ID.theHistogram,mu_reso.theHistogram]
 			lis_el=[[el_scaleup.theHistogram,el_scaledown.theHistogram],[el_PUup.theHistogram,el_PUdown.theHistogram]]
 			errmu=getErrors(stackmu.theHistogram,lis_mu)
+			
 			errel=getErrors(stackel.theHistogram,lis_el)
 	if args.data:
 		yMax = datamu.GetBinContent(datamu.GetMaximumBin())
@@ -599,7 +600,7 @@ def plotDataMC(args,plot_mu,plot_el):
 			vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","3 years data"))
 		else:
 			vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","Lumi #times d#sigma(pp#rightarrow ll)"))
-	vh.GetXaxis().SetMoreLogLabels()
+		vh.GetXaxis().SetMoreLogLabels()
 	
 	drawStack_mu = stackmu
 	drawStack_el = stackel
@@ -664,7 +665,7 @@ def plotDataMC(args,plot_mu,plot_el):
 			if hhmu.GetBinContent(i) == 0: continue
 			#print(math.sqrt(errmu[i-1])/hhmu.GetBinContent(i))
 			yval = hhmu.GetBinContent(i)*1.0/hhel.GetBinContent(i)
-			yerr = yval*math.sqrt((errel[i-1]**0.5/hhel.GetBinContent(i))**2+(errmu[i-1]**0.5/hhmu.GetBinContent(i))**2+(hhmu.GetBinError(i)/hhmu.GetBinContent(i))**2+(hhel.GetBinError(i)/hhel.GetBinContent(i))**2)
+			yerr = yval*math.sqrt((errel[i-1]**0.5/hhel.GetBinContent(i))**2+(errmu[i-1]**0.5/hhmu.GetBinContent(i))**2+(hhmu.GetBinError(i)/hhmu.GetBinContent(i))**2+(hhel.GetBinError(i)/hhel.GetBinContent(i))**2)Resolve Conflicts · Pull Request #3 · JanFSchulte_leptonFlavor
 			ratioGraphs.SetPoint(i, xval, yval)
 			ratioGraphs.SetPointError(i, xerr, xerr, yerr, yerr)
 			print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
