@@ -16,7 +16,8 @@ zScale2018 = {
 }
 zScale2016 = {
 	"electrons":0.951,
-	"muons":0.9638
+	"muons":0.9727
+	# ~ "muons":1.0
 }
 
 crossSections = {
@@ -116,8 +117,22 @@ crossSections = {
 "dy4500to6000_2016":4.56E-7,
 "dy6000toInf_2016":2.06E-8,
 
-"tW_2016":35.6,
-"Wantitop_2016":35.6,
+# ~ "dy50to120_2016":2112.90,
+# ~ "dy120to200_2016":20.56,
+# ~ "dy200to400_2016":2.89,
+# ~ "dy400to800_2016": 0.252,
+# ~ "dy800to1400_2016":1.71E-2,
+# ~ "dy1400to2300_2016":1.37E-3,
+# ~ "dy2300to3500_2016":8.178E-5,
+# ~ "dy3500to4500_2016":3.191E-6,
+# ~ "dy4500to6000_2016":2.787E-7,
+# ~ "dy6000toInf_2016":9.56E-9,
+
+
+# ~ "tW_2016":35.6,
+# ~ "Wantitop_2016":35.6,
+"tW_2016":19.47,
+"Wantitop_2016":19.47,
 "Wjets_2016":61526.7,
 "WW200to600_2016":1.385,
 "WW600to1200_2016":0.0566,
@@ -1058,13 +1073,13 @@ fileNames = {
 "Data_RunE":"dileptonAna_muons_SingleMuonRun2017E-31Mar2018-v1.root",
 "Data_RunF":"dileptonAna_muons_SingleMuonRun2017F-31Mar2018-v1.root",
 
-"Data2016_RunB":"dileptonAna_muons_2016_SingleMuonRun2016B-17Jul2018_ver2-v1.root",
-"Data2016_RunC":"dileptonAna_muons_2016_SingleMuonRun2016C-17Jul2017-v1.root",
-"Data2016_RunD":"dileptonAna_muons_2016_SingleMuonRun2016D-17Jul2017-v1.root",
-"Data2016_RunE":"dileptonAna_muons_2016_SingleMuonRun2016E-17Jul2017-v1.root",
-"Data2016_RunF":"dileptonAna_muons_2016_SingleMuonRun2016F-17Jul2017-v1.root",
-"Data2016_RunG":"dileptonAna_muons_2016_SingleMuonRun2016G-17Jul2017-v1.root",
-"Data2016_RunH":"dileptonAna_muons_2016_SingleMuonRun2016H-17Jul2017-v1.root",
+"Data2016_RunB":"dileptonAna_muons_2016_SingleMuonRun2016B-23Sep2016_v3.root",
+"Data2016_RunC":"dileptonAna_muons_2016_SingleMuonRun2016C-23Sep2016-v1.root",
+"Data2016_RunD":"dileptonAna_muons_2016_SingleMuonRun2016D-23Sep2016-v1.root",
+"Data2016_RunE":"dileptonAna_muons_2016_SingleMuonRun2016E-23Sep2016-v1.root",
+"Data2016_RunF":"dileptonAna_muons_2016_SingleMuonRun2016F-23Sep2016-v1.root",
+"Data2016_RunG":"dileptonAna_muons_2016_SingleMuonRun2016G-23Sep2016-v1.root",
+"Data2016_RunH":"dileptonAna_muons_2016_SingleMuonRun2016H-PromptReco-v1.root",
 
 "Data2018_RunA":"dileptonAna_muons_2018_SingleMuonRun2018A-17Sep2018-v2.root",
 "Data2018_RunB":"dileptonAna_muons_2018_SingleMuonRun2018B-17Sep2018-v1.root",
@@ -1870,7 +1885,7 @@ fileNamesEle = {
 "Data2016_RunE":"dileptonAna_electrons_2016_DoubleEG2016E-17Jul2018-v1.root",
 "Data2016_RunF":"dileptonAna_electrons_2016_DoubleEG2016F-17Jul2018-v1.root",
 "Data2016_RunG":"dileptonAna_electrons_2016_DoubleEG2016G-17Jul2018-v1.root",
-"Data2016_RunH":"dileptonAna_electrons_2016_DoubleEG2016G-17Jul2018-v1.root",
+"Data2016_RunH":"dileptonAna_electrons_2016_DoubleEG2016H-17Jul2018-v1.root",
 
 "Data2018_RunA":"dileptonAna_electrons_2018_DoubleEGRun2018A-17Sep2018-v2.root",
 "Data2018_RunB":"dileptonAna_electrons_2018_DoubleEGRun2018B-17Sep2018-v1.root",
@@ -5785,6 +5800,7 @@ class Plot:
 class plots:
 	
 	massPlotEle = Plot("ElectronSelectionElectronsAllSignsHistos/DielectronMass_bbbe","DielectronMass",xLabel="m(ee) [GeV]",log=True,logX=True,xRange=[70,4000],nBins = 100, rebin=1,yLabel="Events / GeV",useJets=True,muon=False)
+	massPlotEleNoLog = Plot("ElectronSelectionElectronsAllSignsHistos/DielectronMass_bbbe","DielectronMass",xLabel="m(ee) [GeV]",log=True,logX=False,xRange=[70,4000],nBins = 100, rebin=1,yLabel="Events / GeV",useJets=True,muon=False)
 	cosThetaStarPlotEle = Plot("ElectronSelectionElectronsAllSignsHistos/CosThetaStarDilepton","CosThetaStar_Ele",xLabel="cos(#theta^{*})",log=True,logX=False,xRange=[-1,1],nBins = 20, rebin=5,yLabel="Events / 0.02",useJets=False,muon=False)
 	cosThetaStarPlotOppEle = Plot("ElectronSelectionElectronsOppSignHistos/CosThetaStarDilepton","CosThetaStarOpp_Ele",xLabel="cos(#theta^{*})",log=True,logX=False,xRange=[-1,1],nBins = 100, rebin=1,yLabel="Events / 0.02",useJets=False,muon=False)
 	cosThetaStarPlotSameEle = Plot("ElectronSelectionElectronsSameSignHistos/CosThetaStarDilepton","CosThetaStarSame_Ele",xLabel="cos(#theta^{*})",log=True,logX=False,xRange=[-1,1],nBins = 100, rebin=1,yLabel="Events / 0.02",useJets=False,muon=False)
@@ -5843,7 +5859,8 @@ class plots:
 	cosThetaStarVsMassMu = Plot("Our2017MuonsPlusMuonsMinusHistos/DimuonMassVertexConstrainedVsCS","CosThetaStarVsMass_Mu",xLabel = "m(#mu#mu) [GeV]" , yLabel="cos(#theta^{*})",log=False,logX=True,xRange=[300,2000],yRange=[-1,1],nBins = 20, rebin=4,useJets=False,muon=True,plot2D=True)
 
 
-	massPlotBBNoLog = Plot("Our2017MuonsPlusMuonsMinusHistos/DimuonMassVertexConstrained_bb","DimuonMassBB",xLabel="m(#mu^{+}#mu^{-}) [GeV]",log=True,logX=False,xRange=[70,5000],nBins = 100, rebin=20,yLabel="Events / 20 GeV",useJets=True)
+	massPlotNoLog = Plot("Our2017MuonsPlusMuonsMinusHistos/DimuonMassVertexConstrained","DimuonMassBB",xLabel="m(#mu^{+}#mu^{-}) [GeV]",log=True,logX=False,xRange=[70,5000],nBins = 100, rebin=1,yLabel="Events / 20 GeV",useJets=True)
+	massPlotBBNoLog = Plot("Our2017MuonsPlusMuonsMinusHistos/DimuonMassVertexConstrained_bb","DimuonMassBB",xLabel="m(#mu^{+}#mu^{-}) [GeV]",log=True,logX=False,xRange=[70,5000],nBins = 100, rebin=1,yLabel="Events / 20 GeV",useJets=True)
 	massPlotBENoLog = Plot("Our2017MuonsPlusMuonsMinusHistos/DimuonMassVertexConstrained_be","DimuonMassBE",xLabel="m(#mu^{+}#mu^{-}) [GeV]",log=True,logX=False,xRange=[70,5000],nBins = 100, rebin=20,yLabel="Events / 20 GeV",useJets=True)
 	massPlotBBScaleUpNoLog = Plot("Our2017MuonsPlusMuonsMinusHistos/DimuonMassVertexConstrainedScaleUp_bb","DimuonMassScaleUpBB",xLabel="m(#mu^{+}#mu^{-}) [GeV]",log=True,logX=False,xRange=[70,5000],nBins = 100, rebin=20,yLabel="Events / 20 GeV",useJets=True)
 	massPlotBEScaleUpNoLog = Plot("Our2017MuonsPlusMuonsMinusHistos/DimuonMassVertexConstrainedScaleUp_be","DimuonMassScaleUpBE",xLabel="m(#mu^{+}#mu^{-}) [GeV]",log=True,logX=False,xRange=[70,5000],nBins = 100, rebin=20,yLabel="Events / 20 GeV",useJets=True)

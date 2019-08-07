@@ -99,9 +99,9 @@ def inverseAE(hist, plotObj, year):
 				for i in range(1, hist.GetSize()-1):
 					mass = hist.GetBinCenter(i)
 					if mass < 600:
-						ae = 2.129-0.1268*math.exp(-(mass-119.2)/22.38)-2.386*mass**(-0.03623)
+						ae = 2.129-0.1268*math.exp(-(mass-119.2)/22.35)-2.386*mass**(-0.03619)
 					else:
-						ae = 4.429-49670.0/(mass+11570.0)-0.0001761*mass
+						ae = 2.891-2.291e+04/(mass+8294.)-0.0001247*mass
 					#print mass, ae
 					if mass < 120: ae = float("inf")
 					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
@@ -109,9 +109,9 @@ def inverseAE(hist, plotObj, year):
 				for i in range(1, hist.GetSize()-1):
 					mass = hist.GetBinCenter(i)
 					if mass < 450:
-									ae = 13.38-6.704*math.exp((mass+4864000.0)/7417000.0)-805.1*mass**(-1.561)
+									ae = 13.56-6.672*math.exp((mass+4.879e+06)/7.233e+06)-826*mass**(-1.567)
 					else:
-									ae = 0.2577+0.06276*mass**0.8994*math.exp(-(mass+4638.0)/1122)
+									ae =  0.2529+0.06511*mass**0.8755*math.exp(-(mass+4601.)/1147)
 					#print mass, ae
 					if mass < 120: ae = float("inf")
 					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
@@ -500,8 +500,6 @@ def plotDataMC(args,plot_mu,plot_el):
 	if args.ae:
 		if args.useall:
 			i=0
-			Errs_mu=[]
-			Errs_el=[]
 			for year in range(2016,2019):
 				for h in stackmu[i].theStack.GetHists(): inverseAE(h, plot_mu["default"], year)
 				for h in stackel[i].theStack.GetHists(): inverseAE(h, plot_el["default"], year)
@@ -516,26 +514,7 @@ def plotDataMC(args,plot_mu,plot_el):
 				inverseAE(el_PUup[i].theHistogram, plot_el["PU_up"], year)
 				inverseAE(el_PUdown[i].theHistogram, plot_el["PU_down"], year)
 				inverseAE(datamu[i], plot_mu["default"], year)
-				inverseAE(datael[i], plot_el["default"], year)
-				lis_mu=[[mu_scaleup[i].theHistogram,mu_scaledown[i].theHistogram],mu_ID[i].theHistogram,mu_reso[i].theHistogram]
-				lis_el=[[el_scaleup[i].theHistogram,el_scaledown[i].theHistogram],[el_PUup[i].theHistogram,el_PUdown[i].theHistogram]]
-				Errs_mu.append(getErrors(stackmu[i].theHistogram,lis_mu))
-				Errs_el.append(getErrors(stackel[i].theHistogram,lis_el))
-				i+=1
-			errmu=Errs_mu[0]+Errs_mu[1]+Errs_mu[2]
-			errel=Errs_el[0]+Errs_el[1]+Errs_el[2]         
-			stackmu=Addstack(stackmu)
-			stackel=Addstack(stackel)
-			mu_scaleup=Addstack(mu_scaleup)
-			mu_scaledown=Addstack(mu_scaledown)
-			mu_ID=Addstack(mu_ID)
-			mu_reso=Addstack(mu_reso)
-			el_scaleup=Addstack(el_scaleup)
-			el_scaledown=Addstack(el_scaledown)
-			el_PUup=Addstack(el_PUup)
-			el_PUdown=Addstack(el_PUdown)
-			datamu=Addhist(datamu)
-			datael=Addhist(datael)               
+				inverseAE(datael[i], plot_el["default"], year)             
 		else:
 			if args.use2016: year = 2016
 			elif args.use2018: year = 2018
@@ -554,11 +533,37 @@ def plotDataMC(args,plot_mu,plot_el):
 			inverseAE(el_PUdown.theHistogram, plot_el["PU_down"], year)
 			inverseAE(datamu, plot_mu["default"], year)
 			inverseAE(datael, plot_el["default"], year)
-			lis_mu=[[mu_scaleup.theHistogram,mu_scaledown.theHistogram],mu_ID.theHistogram,mu_reso.theHistogram]
-			lis_el=[[el_scaleup.theHistogram,el_scaledown.theHistogram],[el_PUup.theHistogram,el_PUdown.theHistogram]]
-			errmu=getErrors(stackmu.theHistogram,lis_mu)
-			
-			errel=getErrors(stackel.theHistogram,lis_el)
+
+	if args.useall:
+		i=0
+		Errs_mu=[]
+		Errs_el=[]
+		for year in range(2016,2019):
+			lis_mu=[[mu_scaleup[i].theHistogram,mu_scaledown[i].theHistogram],mu_ID[i].theHistogram,mu_reso[i].theHistogram]
+			lis_el=[[el_scaleup[i].theHistogram,el_scaledown[i].theHistogram],[el_PUup[i].theHistogram,el_PUdown[i].theHistogram]]
+			Errs_mu.append(getErrors(stackmu[i].theHistogram,lis_mu))
+			Errs_el.append(getErrors(stackel[i].theHistogram,lis_el))
+			i+=1
+		errmu=Errs_mu[0]+Errs_mu[1]+Errs_mu[2]
+		errel=Errs_el[0]+Errs_el[1]+Errs_el[2]         
+		stackmu=Addstack(stackmu)
+		stackel=Addstack(stackel)
+		mu_scaleup=Addstack(mu_scaleup)
+		mu_scaledown=Addstack(mu_scaledown)
+		mu_ID=Addstack(mu_ID)
+		mu_reso=Addstack(mu_reso)
+		el_scaleup=Addstack(el_scaleup)
+		el_scaledown=Addstack(el_scaledown)
+		el_PUup=Addstack(el_PUup)
+		el_PUdown=Addstack(el_PUdown)
+		datamu=Addhist(datamu)
+		datael=Addhist(datael)               
+	else:
+		lis_mu=[[mu_scaleup.theHistogram,mu_scaledown.theHistogram],mu_ID.theHistogram,mu_reso.theHistogram]
+		lis_el=[[el_scaleup.theHistogram,el_scaledown.theHistogram],[el_PUup.theHistogram,el_PUdown.theHistogram]]
+		errmu=getErrors(stackmu.theHistogram,lis_mu)
+		
+		errel=getErrors(stackel.theHistogram,lis_el)
 	if args.data:
 		yMax = datamu.GetBinContent(datamu.GetMaximumBin())
 		if "Mass" in plot_mu["default"].fileName:
@@ -589,18 +594,26 @@ def plotDataMC(args,plot_mu,plot_el):
 	if not plot_mu["default"].xMax == None:
 		xMax = plot_mu["default"].xMax
 
-	yMin = 0.00001 / 40
-	yMax = 200000000.0 / 40
+
+	xMin = 200
+	xMax = 2000
+	yMin = 1e-3
+	yMax = 1e4
+
 	if args.ae: 
+		yMin = 0.00001 / 40
+		yMax = 200000000.0 / 40
 		xMin = 200
 		xMax = 2000
 		yMin *= 10000
 		yMax /= 10
-		if args.useall:
-			vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","3 years data"))
-		else:
-			vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","Lumi #times d#sigma(pp#rightarrow ll)"))
-		vh.GetXaxis().SetMoreLogLabels()
+	if args.ae:
+		# ~ vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","3 years data"))
+		vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","Events / GeV * 1/(acc. x eff)"))
+	else:
+		# ~ vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","Lumi #times d#sigma(pp#rightarrow ll)"))
+		vh = plotPad.DrawFrame(xMin,yMin,xMax,yMax,"; %s ; %s" %("m(l^{+}l^{-}) [GeV]","Events / GeV"))
+	vh.GetXaxis().SetMoreLogLabels()
 	
 	drawStack_mu = stackmu
 	drawStack_el = stackel
@@ -631,7 +644,7 @@ def plotDataMC(args,plot_mu,plot_el):
 	if args.useall:
 		latex.DrawLatex(0.95, 0.96, "three years data")
 	else:	
-		latex.DrawLatex(0.95, 0.96, "%.3f fb^{-1} (13 TeV, #mu#mu), %.3f fb^{-1} (13 TeV, ee)"%(lumi_mu*0.001, lumi_el*0.001))
+		latex.DrawLatex(0.95, 0.96, "%.1f fb^{-1} (13 TeV, #mu#mu), %.1f fb^{-1} (13 TeV, ee)"%(lumi_mu*0.001, lumi_el*0.001))
 	yLabelPos = 0.85
 	cmsExtra = "Private Work"
 	if not args.data:
@@ -665,7 +678,7 @@ def plotDataMC(args,plot_mu,plot_el):
 			if hhmu.GetBinContent(i) == 0: continue
 			#print(math.sqrt(errmu[i-1])/hhmu.GetBinContent(i))
 			yval = hhmu.GetBinContent(i)*1.0/hhel.GetBinContent(i)
-			yerr = yval*math.sqrt((errel[i-1]**0.5/hhel.GetBinContent(i))**2+(errmu[i-1]**0.5/hhmu.GetBinContent(i))**2+(hhmu.GetBinError(i)/hhmu.GetBinContent(i))**2+(hhel.GetBinError(i)/hhel.GetBinContent(i))**2)Resolve Conflicts · Pull Request #3 · JanFSchulte_leptonFlavor
+			yerr = yval*math.sqrt((errel[i-1]**0.5/hhel.GetBinContent(i))**2+(errmu[i-1]**0.5/hhmu.GetBinContent(i))**2+(hhmu.GetBinError(i)/hhmu.GetBinContent(i))**2+(hhel.GetBinError(i)/hhel.GetBinContent(i))**2)
 			ratioGraphs.SetPoint(i, xval, yval)
 			ratioGraphs.SetPointError(i, xerr, xerr, yerr, yerr)
 			print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
@@ -684,7 +697,10 @@ def plotDataMC(args,plot_mu,plot_el):
 			print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
 		nBinsX = 20
 		nBinsY = 10
-		hAxis = ROOT.TH2F("hAxis", "", nBinsX, xMin, xMax, nBinsY, 0.5, 2.5)
+		if args.ae: 
+			hAxis = ROOT.TH2F("hAxis", "", nBinsX, xMin, xMax, nBinsY, 0.5, 2.5)
+		else:	
+			hAxis = ROOT.TH2F("hAxis", "", nBinsX, xMin, xMax, nBinsY, 0.5, 5)
 		hAxis.Draw("AXIS")
 
 		hAxis.GetYaxis().SetNdivisions(408)
