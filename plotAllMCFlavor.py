@@ -87,7 +87,7 @@ def getErrors(default, others):
 			err=root_numpy.hist2array(other)-dfarr
 			err=err**2
 			errs+=err
-	return err                            
+	return errs                           
 
 # multiply hist by 1/(Acceptance x Efficiency)
 def inverseAE(hist, plotObj, year):
@@ -99,9 +99,9 @@ def inverseAE(hist, plotObj, year):
 				for i in range(1, hist.GetSize()-1):
 					mass = hist.GetBinCenter(i)
 					if mass < 600:
-						ae = 2.13-0.1313*math.exp(-(mass-110.9)/20.31)-2.387*mass**(-0.03616)
+						ae = 2.129-0.1268*math.exp(-(mass-119.2)/22.38)-2.386*mass**(-0.03623)
 					else:
-						ae = 4.931-55500.0/(mass+11570.0)-0.0002108*mass
+						ae = 4.429-49670.0/(mass+11570.0)-0.0001761*mass
 					#print mass, ae
 					if mass < 120: ae = float("inf")
 					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
@@ -109,9 +109,9 @@ def inverseAE(hist, plotObj, year):
 				for i in range(1, hist.GetSize()-1):
 					mass = hist.GetBinCenter(i)
 					if mass < 450:
-									ae = 13.39-6.696*math.exp((mass+4855000.0)/7431000.0)-108.8*mass**(-1.138)
+									ae = 13.38-6.704*math.exp((mass+4864000.0)/7417000.0)-805.1*mass**(-1.561)
 					else:
-									ae = 0.3148+0.04447*mass**1.42*math.exp(-(mass+5108.0)/713.5)
+									ae = 0.2577+0.06276*mass**0.8994*math.exp(-(mass+4638.0)/1122)
 					#print mass, ae
 					if mass < 120: ae = float("inf")
 					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
@@ -119,13 +119,13 @@ def inverseAE(hist, plotObj, year):
 			if "BB" in plotObj.fileName:
 				for i in range(1, hist.GetSize()-1):
 					mass = hist.GetBinCenter(i)
-					ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
+					ae = 0.6386-497.7/(mass+348.7) + 69570.0/(mass**2+115400.0)
 					#print mass, ae
 					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 			elif "BE" in plotObj.fileName:
 				for i in range(1, hist.GetSize()-1):
 					mass = hist.GetBinCenter(i)
-					ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
+					ae = -0.03377+735.1/(mass+1318)-88890.0/(mass**2+75720)+14240000.0/(mass**3+23420000)
 					#print mass, ae
 					hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 
@@ -155,13 +155,13 @@ def inverseAE(hist, plotObj, year):
 				if "BB" in plotObj.fileName:
 						for i in range(1, hist.GetSize()-1):
 								mass = hist.GetBinCenter(i)
-								ae = 0.5795-408.0/(mass+303.5) + 55760.0/(mass**2+98990.0)
+								ae = 0.585-404.6/(mass+279.5) + 56180.0/(mass**2+91430.0)
 								#print mass, ae
 								hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 				elif "BE" in plotObj.fileName:
 						for i in range(1, hist.GetSize()-1):
 								mass = hist.GetBinCenter(i)
-								ae = 0.01176+498.2/(mass+735.3)-100100.0/(mass**2+72990)+14190000.0/(mass**3+21600000)
+								ae = 0.02066+429.7/(mass+729)-90960.0/(mass**2+71900)+13780000.0/(mass**3+22050000)
 								#print mass, ae
 								hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 	elif year == 2018:
@@ -190,13 +190,13 @@ def inverseAE(hist, plotObj, year):
 					if "BB" in plotObj.fileName:
 							for i in range(1, hist.GetSize()-1):
 									mass = hist.GetBinCenter(i)
-									ae = 0.5947-440.1/(mass+393) + 47630.0/(mass**2+108000)
+									ae = 0.576-417.7/(mass+381.8) + 46070.0/(mass**2+107200)
 									#print mass, ae
 									hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 					elif "BE" in plotObj.fileName:
 							for i in range(1, hist.GetSize()-1):
 									mass = hist.GetBinCenter(i)
-									ae = 0.01718+468.9/(mass+575.6)-113300.0/(mass**2+82800)+13740000.0/(mass**3+23380000)
+									ae = 0.01443+475.7/(mass+639.1)-105600.0/(mass**2+82810)+12890000.0/(mass**3+23170000)
 									#print mass, ae
 									hist.SetBinContent(i, hist.GetBinContent(i)*1.0/ae)
 																				
@@ -220,8 +220,8 @@ def plotDataMC(args,plot_mu,plot_el):
 
 	hCanvas = TCanvas("hCanvas", "Distribution", 800,800)
 	if args.ratio:
-		plotPad = ROOT.TPad("plotPad","plotPad",0,0.3,1,1)
-		ratioPad = ROOT.TPad("ratioPad","ratioPad",0,0.,1,0.3)
+		plotPad = ROOT.TPad("plotPad","plotPad",0,0.5,1,1)
+		ratioPad = ROOT.TPad("ratioPad","ratioPad",0,0.,1,0.5)
 		setTDRStyle()		
 		plotPad.UseCurrentStyle()
 		ratioPad.UseCurrentStyle()
@@ -663,11 +663,12 @@ def plotDataMC(args,plot_mu,plot_el):
 			xerr = hhmu.GetBinWidth(i)/2
 			if hhel.GetBinContent(i) == 0: continue
 			if hhmu.GetBinContent(i) == 0: continue
+			#print(math.sqrt(errmu[i-1])/hhmu.GetBinContent(i))
 			yval = hhmu.GetBinContent(i)*1.0/hhel.GetBinContent(i)
-			yerr = yval*math.sqrt((errel[i-1]**0.5/hhel.GetBinContent(i))**2+(errmu[i-1]**0.5/hhmu.GetBinContent(i))**2)
+			yerr = yval*math.sqrt((errel[i-1]**0.5/hhel.GetBinContent(i))**2+(errmu[i-1]**0.5/hhmu.GetBinContent(i))**2+(hhmu.GetBinError(i)/hhmu.GetBinContent(i))**2+(hhel.GetBinError(i)/hhel.GetBinContent(i))**2)Resolve Conflicts · Pull Request #3 · JanFSchulte_leptonFlavor
 			ratioGraphs.SetPoint(i, xval, yval)
 			ratioGraphs.SetPointError(i, xerr, xerr, yerr, yerr)
-			if xval > 1000 and xval < 2000: print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
+			print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
 		ratioData = ROOT.TGraphAsymmErrors(datamu.GetSize()-2)
 		for i in range(1, datamu.GetSize()-1):
 			xval = datamu.GetBinCenter(i)
@@ -680,7 +681,7 @@ def plotDataMC(args,plot_mu,plot_el):
 			yerr = yval*math.sqrt((datamu.GetBinError(i)/datamu.GetBinContent(i))**2+(datael.GetBinError(i)/datael.GetBinContent(i))**2)
 			ratioData.SetPoint(i, xval, yval)
 			ratioData.SetPointError(i, xerr, xerr, yerr, yerr)
-			if xval > 1000 and xval < 2000: print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
+			print ("M = %f, r+-e = %f +- %f"%(xval, yval, yerr/yval))
 		nBinsX = 20
 		nBinsY = 10
 		hAxis = ROOT.TH2F("hAxis", "", nBinsX, xMin, xMax, nBinsY, 0.5, 2.5)
@@ -688,18 +689,22 @@ def plotDataMC(args,plot_mu,plot_el):
 
 		hAxis.GetYaxis().SetNdivisions(408)
 		hAxis.SetTitleOffset(0.4, "Y")
-		hAxis.SetTitleSize(0.15, "Y")
+		hAxis.SetTitleSize(0.09, "Y")
+		hAxis.SetTitleSize(0.06, "X")
 		hAxis.SetYTitle("R_{#mu#mu/ee}")
-		hAxis.GetXaxis().SetLabelSize(0.0)
-		hAxis.GetYaxis().SetLabelSize(0.15)
-		hAxis.SetTitleSize(0.15, "Y")
-		
+		hAxis.SetXTitle("m(l^{+}l^{-}) [GeV]")
+		hAxis.GetXaxis().SetLabelSize(0.048)
+		hAxis.GetYaxis().SetLabelSize(0.048)
+		#hAxis.GetXaxis().SetTicks("+")
+		#hAxis.SetTitleSize(0.15, "Y")
+		hAxis.GetXaxis().SetMoreLogLabels()	
 		oneLine = ROOT.TLine(xMin, 1.0, xMax, 1.0)
 		oneLine.SetLineStyle(2)
 		oneLine.Draw()
 	
 		ratioGraphs.SetFillColor(ROOT.kBlue-3)
 		ratioGraphs.SetMarkerColor(ROOT.kBlue-3)
+		ratioGraphs.GetXaxis().SetLabelSize(0.0)
 		ratioGraphs.SetFillStyle(3002)	
 		ratioGraphs.Draw("SAME p")
 		ratioData.SetMarkerColor(ROOT.kViolet)
